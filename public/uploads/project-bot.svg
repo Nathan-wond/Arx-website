@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="100%" height="100%" fill="#0c1322" />
+  <g transform="translate(300, 80)">
+    <circle cx="100" cy="100" r="90" fill="#229ed9" />
+    <path d="M45 98 L155 55 C160 53 165 57 163 62 L140 145 C139 150 134 152 130 149 L98 125 L84 140 C82 142 78 141 78 138 L81 113 L135 73 L70 108 L47 98 Z" fill="#ffffff" />
+  </g>
+  <text x="400" y="340" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">Lab 3 Telegram Bot Assistant</text>
+  <text x="400" y="375" font-family="'JetBrains Mono', monospace" font-size="16" fill="#38bdf8" text-anchor="middle">@ARXITCLUB_bot</text>
+</svg>

@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 625" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f261e" />
+      <stop offset="50%" stop-color="#14382c" />
+      <stop offset="100%" stop-color="#081813" />
+    </linearGradient>
+
+    <!-- Ambient Glow -->
+    <radialGradient id="haloGlow" cx="50%" cy="38%" r="45%">
+      <stop offset="0%" stop-color="#2F8068" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#15362B" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#081813" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Face Gradient -->
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c99878" />
+      <stop offset="100%" stop-color="#a67353" />
+    </linearGradient>
+
+    <!-- Shadow for Face -->
+    <linearGradient id="neckShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7a4f35" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#8a5b3e" />
+    </linearGradient>
+
+    <!-- Hair Gradient -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#261c16" />
+      <stop offset="100%" stop-color="#140f0c" />
+    </linearGradient>
+
+    <!-- Hoodie / Shirt Gradient -->
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Glasses Cyan / Emerald Rim -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6BB89E" />
+      <stop offset="100%" stop-color="#2F8068" />
+    </linearGradient>
+
+    <!-- Subtle Tech Code Icon Gradient -->
+    <linearGradient id="techBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FC6454" />
+      <stop offset="100%" stop-color="#e04d3e" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="500" height="625" fill="url(#bgGrad)" />
+  <circle cx="250" cy="240" r="220" fill="url(#haloGlow)" />
+
+  <!-- Subtle Matrix / Circuit Line Details -->
+  <g stroke="#2F8068" stroke-opacity="0.15" stroke-width="1.5" stroke-dasharray="4,6" fill="none">
+    <circle cx="250" cy="240" r="170" />
+    <circle cx="250" cy="240" r="210" />
+    <path d="M 60,240 L 140,240 M 360,240 L 440,240" />
+    <path d="M 250,50 L 250,110" />
+  </g>
+
+  <!-- Torso / Shoulders (Hoodie) -->
+  <g>
+    <!-- Base Shoulders -->
+    <path d="M 70,625 C 75,510 130,465 210,450 L 290,450 C 370,465 425,510 430,625 Z" fill="url(#hoodieGrad)" />
+    
+    <!-- Collar Detail -->
+    <path d="M 195,450 Q 250,510 305,450 L 290,440 Q 250,490 210,440 Z" fill="#334155" />
+    
+    <!-- Shirt Inner / V-Neck -->
+    <path d="M 210,445 Q 250,495 290,445 L 285,420 Q 250,450 215,420 Z" fill="#475569" />
+  </g>
+
+  <!-- Neck -->
+  <path d="M 220,380 L 220,440 Q 250,455 280,440 L 280,380 Z" fill="url(#neckShadow)" />
+  <path d="M 220,395 L 220,440 Q 250,455 280,440 L 280,395 Q 250,410 220,395 Z" fill="url(#skinGrad)" />
+
+  <!-- Ears -->
+  <ellipse cx="168" cy="265" rx="14" ry="24" fill="#a67353" />
+  <ellipse cx="169" cy="265" rx="8" ry="15" fill="#8a5b3e" />
+  <ellipse cx="332" cy="265" rx="14" ry="24" fill="#a67353" />
+  <ellipse cx="331" cy="265" rx="8" ry="15" fill="#8a5b3e" />
+
+  <!-- Head / Face -->
+  <path d="M 180,210 C 180,150 320,150 320,210 C 320,285 305,345 250,370 C 195,345 180,285 180,210 Z" fill="url(#skinGrad)" />
+
+  <!-- Jawline Contour -->
+  <path d="M 185,270 C 195,335 230,365 250,370 C 270,365 305,335 315,270" fill="none" stroke="#8a5b3e" stroke-width="2" stroke-opacity="0.4" />
+
+  <!-- Hair (Clean Modern Fade / Textured Top) -->
+  <path d="M 172,215 C 170,165 190,120 250,115 C 310,120 330,165 328,215 C 320,205 310,200 300,202 C 285,195 265,192 250,195 C 235,192 215,195 200,202 C 190,200 180,205 172,215 Z" fill="url(#hairGrad)" />
+  <!-- Hair Texture Highlights -->
+  <path d="M 195,145 C 215,130 275,128 305,145 C 295,135 255,125 210,135 Z" fill="#3d2c23" opacity="0.6" />
+
+  <!-- Eyebrows -->
+  <path d="M 200,230 Q 220,224 235,228" stroke="#261c16" stroke-width="4" stroke-linecap="round" fill="none" />
+  <path d="M 265,228 Q 280,224 300,230" stroke="#261c16" stroke-width="4" stroke-linecap="round" fill="none" />
+
+  <!-- Eyes -->
+  <ellipse cx="218" cy="245" rx="6.5" ry="4.5" fill="#261c16" />
+  <circle cx="216" cy="243" r="2" fill="#ffffff" />
+  <ellipse cx="282" cy="245" rx="6.5" ry="4.5" fill="#261c16" />
+  <circle cx="280" cy="243" r="2" fill="#ffffff" />
+
+  <!-- Nose -->
+  <path d="M 250,246 L 246,280 Q 250,285 254,280 Z" fill="#8a5b3e" opacity="0.6" />
+
+  <!-- Smile / Expression -->
+  <path d="M 235,310 Q 250,322 265,310" stroke="#7a4f35" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Developer Glasses (Crisp Modern Frames) -->
+  <g stroke="url(#accentGrad)" stroke-width="3.5" fill="none">
+    <!-- Left Lens -->
+    <rect x="200" y="232" width="38" height="26" rx="7" fill="#ffffff" fill-opacity="0.08" />
+    <!-- Right Lens -->
+    <rect x="262" y="232" width="38" height="26" rx="7" fill="#ffffff" fill-opacity="0.08" />
+    <!-- Bridge -->
+    <path d="M 238,242 Q 250,238 262,242" />
+    <!-- Temples -->
+    <path d="M 200,242 L 175,238" />
+    <path d="M 300,242 L 325,238" />
+  </g>
+
+  <!-- Modern Floating Developer Badge (Bottom Right) -->
+  <g transform="translate(370, 480)">
+    <circle cx="36" cy="36" r="34" fill="#102B22" stroke="#2F8068" stroke-width="2.5" />
+    <!-- Terminal Code Tag </> -->
+    <text x="36" y="43" font-family="monospace" font-weight="900" font-size="20" fill="#6BB89E" text-anchor="middle">&lt;/&gt;</text>
+  </g>
+</svg>

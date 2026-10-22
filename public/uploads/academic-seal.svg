@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <radialGradient id="grad-seal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="70%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#a16207" />
+    </radialGradient>
+  </defs>
+  <!-- Outer sawtooth seal -->
+  <circle cx="150" cy="150" r="140" fill="url(#grad-seal)" stroke="#854d0e" stroke-width="4" />
+  <circle cx="150" cy="150" r="115" fill="none" stroke="#713f12" stroke-width="3" stroke-dasharray="6,4" />
+  <circle cx="150" cy="150" r="95" fill="#fef9c3" stroke="#854d0e" stroke-width="3" />
+  <!-- Center crest -->
+  <text x="150" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="16" fill="#713f12" text-anchor="middle">OFFICIAL ACADEMIC</text>
+  <text x="150" y="155" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="22" fill="#854d0e" text-anchor="middle">VERIFIED</text>
+  <text x="150" y="180" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="14" fill="#713f12" text-anchor="middle">SEAL OF EXCELLENCE</text>
+  <!-- Stars -->
+  <text x="150" y="215" font-size="20" fill="#ca8a04" text-anchor="middle">★ ★ ★</text>
+</svg>

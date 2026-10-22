@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="grad-html" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grad-html)" />
+  <rect x="60" y="50" width="680" height="400" rx="16" fill="#020617" stroke="#334155" stroke-width="2" />
+  <circle cx="100" cy="85" r="7" fill="#ef4444" />
+  <circle cx="125" cy="85" r="7" fill="#f59e0b" />
+  <circle cx="150" cy="85" r="7" fill="#10b981" />
+  <path d="M260 160 L280 340 L400 370 L520 340 L540 160 Z" fill="#e44d26" opacity="0.9" />
+  <path d="M400 180 L400 345 L495 320 L510 180 Z" fill="#f16529" />
+  <path d="M320 220 L480 220 L470 260 L400 260 L400 300 L445 285 L448 265 L475 265 L465 315 L400 335 L335 315 L328 240 L358 240 L363 285 L400 295 L400 260 L320 260 Z" fill="#ffffff" />
+  <text x="400" y="420" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="24" fill="#ffffff" text-anchor="middle">HTML5 &amp; MODERN RESPONSIVE CSS</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="grad-ai" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grad-ai)" />
+  <!-- Neural graph -->
+  <g stroke="#38bdf8" stroke-width="2" opacity="0.6">
+    <line x1="200" y1="150" x2="350" y2="100" />
+    <line x1="200" y1="250" x2="350" y2="100" />
+    <line x1="200" y1="350" x2="350" y2="250" />
+    <line x1="200" y1="150" x2="350" y2="250" />
+    <line x1="350" y1="100" x2="500" y2="180" />
+    <line x1="350" y1="250" x2="500" y2="180" />
+    <line x1="350" y1="380" x2="500" y2="300" />
+    <line x1="500" y1="180" x2="650" y2="250" />
+    <line x1="500" y1="300" x2="650" y2="250" />
+  </g>
+  <!-- Nodes -->
+  <circle cx="200" cy="150" r="16" fill="#818cf8" />
+  <circle cx="200" cy="250" r="16" fill="#818cf8" />
+  <circle cx="200" cy="350" r="16" fill="#818cf8" />
+  <circle cx="350" cy="100" r="20" fill="#38bdf8" />
+  <circle cx="350" cy="250" r="22" fill="#06b6d4" />
+  <circle cx="350" cy="380" r="18" fill="#38bdf8" />
+  <circle cx="500" cy="180" r="24" fill="#a855f7" />
+  <circle cx="500" cy="300" r="22" fill="#ec4899" />
+  <circle cx="650" cy="250" r="28" fill="#22c55e" />
+  <text x="400" y="450" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="22" fill="#ffffff" text-anchor="middle">ARTIFICIAL INTELLIGENCE &amp; NEURAL NETWORKS</text>
+</svg>

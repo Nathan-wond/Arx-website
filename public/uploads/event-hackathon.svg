@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="grad-hack" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4338ca" />
+      <stop offset="100%" stop-color="#7e22ce" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grad-hack)" />
+  <text x="400" y="160" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="44" fill="#ffffff" text-anchor="middle" letter-spacing="2">ANNUAL HACKATHON 2026</text>
+  <text x="400" y="210" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="20" fill="#38bdf8" text-anchor="middle">24 HOURS &bull; COMPUTER LAB 3 &bull; CASH PRIZES</text>
+  <!-- Trophy graphic -->
+  <g transform="translate(340, 240) scale(0.6)">
+    <path d="M50 40 L150 40 L150 120 C150 170 50 170 50 120 Z" fill="#facc15" stroke="#ca8a04" stroke-width="6" />
+    <path d="M50 60 C10 60 10 100 50 100" stroke="#facc15" stroke-width="8" fill="none" />
+    <path d="M150 60 C190 60 190 100 150 100" stroke="#facc15" stroke-width="8" fill="none" />
+    <rect x="85" y="160" width="30" height="40" fill="#ca8a04" />
+    <rect x="60" y="200" width="80" height="30" rx="4" fill="#713f12" />
+  </g>
+</svg>

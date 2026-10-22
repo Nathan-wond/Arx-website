@@ -1,0 +1,5 @@
+{
+  "summary": "Complete Production Attendance Management System with Ethiopian Clock System (Africa/Addis_Ababa timezone), course-linked attendance sessions, strict schedule window enforcement (7:00-7:30 Ethiopian Present, 7:30-7:40 Late Window, 7:40+ Closed), PBKDF2 password verification, duplicate prevention, administrative review and correction workflow, post-cutoff controlled absence finalization, and member & admin dashboard integration.",
+  "updatedAt": "2026-10-18T20:40:41.747440474Z",
+  "userFacing": true
+}

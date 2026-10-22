@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="grad-compact-arx" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="32" fill="#020617" />
+  <rect x="20" y="20" width="160" height="160" rx="24" fill="url(#grad-compact-arx)" />
+  <path d="M60 80 L35 100 L60 120 M140 80 L165 100 L140 120 M115 65 L85 135" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <text x="100" y="172" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="15" fill="#ffffff" text-anchor="middle" letter-spacing="2">ARX</text>
+</svg>

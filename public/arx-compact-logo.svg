@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <path id="top-arc-compact" d="M 80 300 A 220 220 0 1 1 520 300" fill="none" />
+  </defs>
+
+  <!-- Outer Deep Blue Ring -->
+  <circle cx="300" cy="300" r="285" fill="#1d63ff" />
+  
+  <!-- Outer Arc Track with Arched "ARX IT CLUB" -->
+  <text font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-weight="900" font-size="60" fill="#ffffff" letter-spacing="8">
+    <textPath href="#top-arc-compact" startOffset="50%" text-anchor="middle">
+      ARX IT CLUB
+    </textPath>
+  </text>
+
+  <!-- Inner Concentric White Ring -->
+  <circle cx="300" cy="300" r="215" fill="none" stroke="#ffffff" stroke-width="12" />
+  
+  <!-- Inner Blue Field -->
+  <circle cx="300" cy="300" r="208" fill="#1d63ff" />
+
+  <!-- Heraldic Tech Snowflake Motif -->
+  <g id="compact-snowflake" transform="translate(300, 310) scale(0.78)">
+    <!-- 4 Central Square Vias in 2x2 grid -->
+    <rect x="-22" y="-22" width="18" height="18" rx="2" fill="#ffffff" />
+    <rect x="4" y="-22" width="18" height="18" rx="2" fill="#ffffff" />
+    <rect x="-22" y="4" width="18" height="18" rx="2" fill="#ffffff" />
+    <rect x="4" y="4" width="18" height="18" rx="2" fill="#ffffff" />
+
+    <!-- 4 Major Arrowhead Prongs (North, South, East, West) -->
+    <!-- North -->
+    <g>
+      <polygon points="0,-36 28,-135 -28,-135" fill="#ffffff" />
+      <polygon points="0,-140 16,-166 0,-192 -16,-166" fill="#ffffff" />
+      <polygon points="0,-198 10,-212 0,-226 -10,-212" fill="#ffffff" />
+    </g>
+    <!-- South -->
+    <g>
+      <polygon points="0,36 28,135 -28,135" fill="#ffffff" />
+      <polygon points="0,140 16,166 0,192 -16,166" fill="#ffffff" />
+      <polygon points="0,198 10,212 0,226 -10,212" fill="#ffffff" />
+    </g>
+    <!-- East -->
+    <g>
+      <polygon points="36,0 135,28 135,-28" fill="#ffffff" />
+      <polygon points="140,0 166,16 192,0 166,-16" fill="#ffffff" />
+      <polygon points="198,0 212,10 226,0 212,-10" fill="#ffffff" />
+    </g>
+    <!-- West -->
+    <g>
+      <polygon points="-36,0 -135,28 -135,-28" fill="#ffffff" />
+      <polygon points="-140,0 -166,16 -192,0 -166,-16" fill="#ffffff" />
+      <polygon points="-198,0 -212,10 -226,0 -212,-10" fill="#ffffff" />
+    </g>
+
+    <!-- 4 Diagonal Prongs with Crosslets -->
+    <!-- North-East -->
+    <g transform="rotate(45)">
+      <line x1="0" y1="-28" x2="0" y2="-120" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-135" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-120" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-120" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- South-East -->
+    <g transform="rotate(135)">
+      <line x1="0" y1="-28" x2="0" y2="-120" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-135" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-120" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-120" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- South-West -->
+    <g transform="rotate(225)">
+      <line x1="0" y1="-28" x2="0" y2="-120" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-135" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-120" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-120" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- North-West -->
+    <g transform="rotate(315)">
+      <line x1="0" y1="-28" x2="0" y2="-120" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-135" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-120" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-120" width="12" height="12" fill="#ffffff" />
+    </g>
+  </g>
+</svg>

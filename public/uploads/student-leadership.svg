@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="100%" height="100%" fill="#0f172a" />
+  <!-- Four student officer avatar badges -->
+  <g transform="translate(100, 120)">
+    <circle cx="50" cy="50" r="50" fill="#2563eb" />
+    <text x="50" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">PR</text>
+    <text x="50" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" fill="#ffffff" text-anchor="middle">President</text>
+  </g>
+  <g transform="translate(260, 120)">
+    <circle cx="50" cy="50" r="50" fill="#0891b2" />
+    <text x="50" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">VP</text>
+    <text x="50" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" fill="#ffffff" text-anchor="middle">Vice Pres.</text>
+  </g>
+  <g transform="translate(420, 120)">
+    <circle cx="50" cy="50" r="50" fill="#059669" />
+    <text x="50" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">TL</text>
+    <text x="50" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" fill="#ffffff" text-anchor="middle">Tech Lead</text>
+  </g>
+  <g transform="translate(580, 120)">
+    <circle cx="50" cy="50" r="50" fill="#7c3aed" />
+    <text x="50" y="60" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">SEC</text>
+    <text x="50" y="130" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="16" fill="#ffffff" text-anchor="middle">Secretary</text>
+  </g>
+  <text x="400" y="360" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="24" fill="#ffffff" text-anchor="middle">ARX Student Executive Governance</text>
+  <text x="400" y="395" font-family="'Space Grotesk', sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Elected Student Officers Working with School Faculty Mentors</text>
+</svg>

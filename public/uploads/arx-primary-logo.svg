@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <!-- Top Text Path -->
+    <path id="top-arc-primary" d="M 120 400 A 280 280 0 1 1 680 400" fill="none" />
+    <!-- Bottom Text Path -->
+    <path id="bottom-arc-primary" d="M 680 400 A 280 280 0 0 1 120 400" fill="none" />
+    
+    <!-- Gradients -->
+    <linearGradient id="primary-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e60ff" />
+      <stop offset="100%" stop-color="#164cd9" />
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Double Rings -->
+  <circle cx="400" cy="400" r="390" fill="none" stroke="#1d63ff" stroke-width="16" />
+  <circle cx="400" cy="400" r="372" fill="none" stroke="#ffffff" stroke-width="6" />
+
+  <!-- Outer Arc Band for Text -->
+  <circle cx="400" cy="400" r="366" fill="#ffffff" />
+  <circle cx="400" cy="400" r="280" fill="#1d63ff" stroke="#ffffff" stroke-width="12" />
+  <circle cx="400" cy="400" r="268" fill="#1d63ff" stroke="#ffffff" stroke-width="4" />
+
+  <!-- Arched Typography -->
+  <!-- Top: ARX IT CLUB -->
+  <text font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-weight="900" font-size="64" fill="#1d63ff" letter-spacing="6">
+    <textPath href="#top-arc-primary" startOffset="50%" text-anchor="middle">
+      ARX IT CLUB
+    </textPath>
+  </text>
+
+  <!-- Bottom: ST. JOSEPH SCHOOL -->
+  <text font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-weight="900" font-size="44" fill="#1d63ff" letter-spacing="5">
+    <textPath href="#bottom-arc-primary" startOffset="50%" text-anchor="middle">
+      ST. JOSEPH SCHOOL
+    </textPath>
+  </text>
+
+  <!-- Inner Blue Disk Content -->
+  <g id="circuit-n-primary">
+    <!-- Left Leg of N (Circuit traces: blue & cyan with bottom via pads) -->
+    <!-- Outer trace -->
+    <path d="M 230 290 L 230 500" stroke="#ffffff" stroke-width="14" stroke-linecap="round" fill="none" />
+    <circle cx="230" cy="515" r="14" fill="#1d63ff" stroke="#ffffff" stroke-width="8" />
+
+    <!-- Middle-left trace -->
+    <path d="M 265 290 L 265 470" stroke="#00e5ff" stroke-width="12" stroke-linecap="round" fill="none" />
+    <circle cx="265" cy="485" r="12" fill="#00e5ff" stroke="#ffffff" stroke-width="4" />
+
+    <!-- Inner-left trace with 45-degree angle -->
+    <path d="M 300 290 L 300 420 L 325 445" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <circle cx="335" cy="455" r="10" fill="#1d63ff" stroke="#00e5ff" stroke-width="4" />
+
+    <!-- Right Leg of N (Circuit traces: white & cyan with top via pads) -->
+    <!-- Right outer trace -->
+    <path d="M 570 510 L 570 300" stroke="#ffffff" stroke-width="14" stroke-linecap="round" fill="none" />
+    <circle cx="570" cy="285" r="14" fill="#1d63ff" stroke="#ffffff" stroke-width="8" />
+
+    <!-- Right middle trace -->
+    <path d="M 535 510 L 535 320" stroke="#00e5ff" stroke-width="12" stroke-linecap="round" fill="none" />
+    <circle cx="535" cy="305" r="12" fill="#00e5ff" stroke="#ffffff" stroke-width="4" />
+
+    <!-- Right inner trace with 45-degree angle -->
+    <path d="M 500 510 L 500 375 L 475 350" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <circle cx="465" cy="340" r="10" fill="#1d63ff" stroke="#00e5ff" stroke-width="4" />
+
+    <!-- Stylized Diagonal Connector Elements -->
+    <path d="M 300 310 L 490 500" stroke="#ffffff" stroke-width="16" stroke-linecap="round" opacity="0.3" fill="none" />
+    <path d="M 450 510 L 500 460" stroke="#ffffff" stroke-width="8" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Central Heraldic Tech Snowflake Motif -->
+  <g id="heraldic-snowflake" transform="translate(400, 400)">
+    <!-- 4 Central Square Vias in 2x2 grid -->
+    <rect x="-24" y="-24" width="20" height="20" rx="3" fill="#ffffff" />
+    <rect x="4" y="-24" width="20" height="20" rx="3" fill="#ffffff" />
+    <rect x="-24" y="4" width="20" height="20" rx="3" fill="#ffffff" />
+    <rect x="4" y="4" width="20" height="20" rx="3" fill="#ffffff" />
+
+    <!-- 4 Major Arrowhead Prongs (North, South, East, West) -->
+    <!-- North -->
+    <g>
+      <polygon points="0,-40 28,-140 -28,-140" fill="#ffffff" />
+      <polygon points="0,-146 16,-172 0,-198 -16,-172" fill="#ffffff" />
+      <polygon points="0,-204 10,-218 0,-232 -10,-218" fill="#ffffff" />
+    </g>
+    <!-- South -->
+    <g>
+      <polygon points="0,40 28,140 -28,140" fill="#ffffff" />
+      <polygon points="0,146 16,172 0,198 -16,172" fill="#ffffff" />
+      <polygon points="0,204 10,218 0,232 -10,218" fill="#ffffff" />
+    </g>
+    <!-- East -->
+    <g>
+      <polygon points="40,0 140,28 140,-28" fill="#ffffff" />
+      <polygon points="146,0 172,16 198,0 172,-16" fill="#ffffff" />
+      <polygon points="204,0 218,10 232,0 218,-10" fill="#ffffff" />
+    </g>
+    <!-- West -->
+    <g>
+      <polygon points="-40,0 -140,28 -140,-28" fill="#ffffff" />
+      <polygon points="-146,0 -172,16 -198,0 -172,-16" fill="#ffffff" />
+      <polygon points="-204,0 -218,10 -232,0 -218,-10" fill="#ffffff" />
+    </g>
+
+    <!-- 4 Diagonal Prongs with Crosslets -->
+    <!-- North-East -->
+    <g transform="rotate(45)">
+      <line x1="0" y1="-30" x2="0" y2="-125" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-140" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-125" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-125" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- South-East -->
+    <g transform="rotate(135)">
+      <line x1="0" y1="-30" x2="0" y2="-125" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-140" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-125" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-125" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- South-West -->
+    <g transform="rotate(225)">
+      <line x1="0" y1="-30" x2="0" y2="-125" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-140" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-125" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-125" width="12" height="12" fill="#ffffff" />
+    </g>
+    <!-- North-West -->
+    <g transform="rotate(315)">
+      <line x1="0" y1="-30" x2="0" y2="-125" stroke="#ffffff" stroke-width="12" stroke-linecap="round" />
+      <rect x="-9" y="-140" width="18" height="18" fill="#ffffff" />
+      <rect x="-24" y="-125" width="12" height="12" fill="#ffffff" />
+      <rect x="12" y="-125" width="12" height="12" fill="#ffffff" />
+    </g>
+
+    <!-- Ray accents -->
+    <line x1="0" y1="-50" x2="0" y2="-110" stroke="#1d63ff" stroke-width="5" />
+    <line x1="0" y1="50" x2="0" y2="110" stroke="#1d63ff" stroke-width="5" />
+    <line x1="-50" y1="0" x2="-110" y2="0" stroke="#1d63ff" stroke-width="5" />
+    <line x1="50" y1="0" x2="110" y2="0" stroke="#1d63ff" stroke-width="5" />
+  </g>
+</svg>

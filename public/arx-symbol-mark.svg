@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <linearGradient id="circuit-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1d63ff" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <linearGradient id="circuit-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Circuit Column of 'N' -->
+  <!-- Outer deep blue track -->
+  <path d="M 60 70 L 60 520" stroke="#1d63ff" stroke-width="26" stroke-linecap="round" fill="none" />
+  <circle cx="60" cy="545" r="24" fill="#1d63ff" />
+  <circle cx="60" cy="545" r="10" fill="#00e5ff" />
+
+  <!-- Middle cyan track -->
+  <path d="M 125 100 L 125 430" stroke="#00e5ff" stroke-width="20" stroke-linecap="round" fill="none" />
+  <circle cx="125" cy="450" r="20" fill="#00e5ff" />
+  <circle cx="125" cy="450" r="9" fill="#ffffff" />
+
+  <!-- Inner blue track with 45-deg corner -->
+  <path d="M 190 70 L 190 520" stroke="#1d63ff" stroke-width="24" stroke-linecap="round" fill="none" />
+  <circle cx="190" cy="545" r="22" fill="#1d63ff" />
+  <circle cx="190" cy="545" r="9" fill="#f1f5f9" />
+
+  <!-- Right Circuit Column of 'N' -->
+  <!-- Inner white/light-cyan track -->
+  <path d="M 410 520 L 410 200 L 440 170" stroke="#e0f2fe" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <circle cx="448" cy="162" r="18" fill="#e0f2fe" />
+  <circle cx="448" cy="162" r="8" fill="#00e5ff" />
+
+  <!-- Middle cyan track -->
+  <path d="M 475 520 L 475 140" stroke="#00e5ff" stroke-width="20" stroke-linecap="round" fill="none" />
+  <circle cx="475" cy="120" r="20" fill="#00e5ff" />
+  <circle cx="475" cy="120" r="9" fill="#ffffff" />
+
+  <!-- Outer white track -->
+  <path d="M 540 520 L 540 70" stroke="#f8fafc" stroke-width="24" stroke-linecap="round" fill="none" />
+  <circle cx="540" cy="50" r="22" fill="#f8fafc" />
+  <circle cx="540" cy="50" r="10" fill="#00e5ff" />
+
+  <!-- Connecting 45-degree angle trace paths -->
+  <path d="M 190 100 L 410 320" stroke="#1d63ff" stroke-width="24" stroke-linecap="round" opacity="0.6" fill="none" />
+  <path d="M 330 460 L 410 380" stroke="#e0f2fe" stroke-width="20" stroke-linecap="round" fill="none" />
+
+  <!-- Central Heraldic Tech Snowflake Motif (Royal Blue & Cyan) -->
+  <g id="symbol-snowflake" transform="translate(300, 300) scale(0.95)">
+    <!-- 4 Central Square Vias in 2x2 grid -->
+    <rect x="-24" y="-24" width="20" height="20" rx="3" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+    <rect x="4" y="-24" width="20" height="20" rx="3" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+    <rect x="-24" y="4" width="20" height="20" rx="3" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+    <rect x="4" y="4" width="20" height="20" rx="3" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+
+    <!-- 4 Major Arrowhead Prongs (North, South, East, West) in rich blue -->
+    <!-- North -->
+    <g>
+      <polygon points="0,-40 32,-150 -32,-150" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="0,-156 18,-185 0,-214 -18,-185" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="0,-220 12,-236 0,-252 -12,-236" fill="#1d63ff" />
+    </g>
+    <!-- South -->
+    <g>
+      <polygon points="0,40 32,150 -32,150" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="0,156 18,185 0,214 -18,185" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="0,220 12,236 0,252 -12,236" fill="#1d63ff" />
+    </g>
+    <!-- East -->
+    <g>
+      <polygon points="40,0 150,32 150,-32" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="156,0 185,18 214,0 185,-18" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="220,0 236,12 252,0 236,-12" fill="#1d63ff" />
+    </g>
+    <!-- West -->
+    <g>
+      <polygon points="-40,0 -150,32 -150,-32" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="-156,0 -185,18 -214,0 -185,-18" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <polygon points="-220,0 -236,12 -252,0 -236,-12" fill="#1d63ff" />
+    </g>
+
+    <!-- 4 Diagonal Prongs with Crosslets -->
+    <!-- North-East -->
+    <g transform="rotate(45)">
+      <line x1="0" y1="-30" x2="0" y2="-130" stroke="#1d63ff" stroke-width="14" stroke-linecap="round" />
+      <rect x="-10" y="-146" width="20" height="20" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <rect x="-26" y="-130" width="12" height="12" fill="#1d63ff" />
+      <rect x="14" y="-130" width="12" height="12" fill="#1d63ff" />
+    </g>
+    <!-- South-East -->
+    <g transform="rotate(135)">
+      <line x1="0" y1="-30" x2="0" y2="-130" stroke="#1d63ff" stroke-width="14" stroke-linecap="round" />
+      <rect x="-10" y="-146" width="20" height="20" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <rect x="-26" y="-130" width="12" height="12" fill="#1d63ff" />
+      <rect x="14" y="-130" width="12" height="12" fill="#1d63ff" />
+    </g>
+    <!-- South-West -->
+    <g transform="rotate(225)">
+      <line x1="0" y1="-30" x2="0" y2="-130" stroke="#1d63ff" stroke-width="14" stroke-linecap="round" />
+      <rect x="-10" y="-146" width="20" height="20" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <rect x="-26" y="-130" width="12" height="12" fill="#1d63ff" />
+      <rect x="14" y="-130" width="12" height="12" fill="#1d63ff" />
+    </g>
+    <!-- North-West -->
+    <g transform="rotate(315)">
+      <line x1="0" y1="-30" x2="0" y2="-130" stroke="#1d63ff" stroke-width="14" stroke-linecap="round" />
+      <rect x="-10" y="-146" width="20" height="20" fill="#1d63ff" stroke="#ffffff" stroke-width="2" />
+      <rect x="-26" y="-130" width="12" height="12" fill="#1d63ff" />
+      <rect x="14" y="-130" width="12" height="12" fill="#1d63ff" />
+    </g>
+  </g>
+</svg>
