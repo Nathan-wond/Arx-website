@@ -104,9 +104,16 @@ async function startServer() {
     }));
   }
 
-  
+  // Request size limits (protect against oversized payloads)
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+  // Request logging for debugging Vercel → ngrok → backend flow
+  app.use((req, res, next) => {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] ${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
+    next();
+  });
 
   
   const uploadsDir = path.resolve(__dirname, 'uploads');

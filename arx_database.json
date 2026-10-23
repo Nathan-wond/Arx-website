@@ -333,6 +333,9 @@
     {
       "id": "ses_1792769129993_m2gr",
       "token": "act_1792769129993_yfdnnjaso0395wa5",
+      "activationCode": null,
+      "shortCode": null,
+      "activationCodeExpiresAt": null,
       "codeUsed": false,
       "failedAttempts": 0,
       "memberId": "admino",
