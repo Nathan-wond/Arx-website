@@ -10,7 +10,16 @@ export default defineConfig(() => {
       }
     },
     server: {
-      hmr: false
+      hmr: false,
+      allowedHosts: [
+        'localhost',
+        '127.0.0.1',
+        '.vercel.app',
+        '.ngrok-free.dev',
+        '.ngrok.io',
+        '.ngrok.app',
+        'hesitate-posting-nacho.ngrok-free.dev'
+      ]
     },
     build: {
       rollupOptions: {
