@@ -334,7 +334,7 @@ export const authController = {
       }
       
 
-      const newMember = db.createMember({
+      const newMember = await db.createMember({
         firstName: cleanFirst,
         secondName: cleanSecond || undefined,
         lastName: cleanLast,

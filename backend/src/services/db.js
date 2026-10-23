@@ -2011,7 +2011,7 @@ class DatabaseStore {
     return undefined;
   }
 
-  createMember(params) {
+  async createMember(params) {
     const existingIds = this.getAllExistingMemberIds();
     const newMemberId = generateMemberId(existingIds);
     const now = new Date().toISOString();
@@ -2044,7 +2044,7 @@ class DatabaseStore {
       award: params.award ? params.award.trim() : undefined,
       motivationEssay: params.motivationEssay ? params.motivationEssay.trim() : (params.essay ? params.essay.trim() : undefined),
       essay: params.motivationEssay ? params.motivationEssay.trim() : (params.essay ? params.essay.trim() : undefined),
-      
+
       aiEssayScore: params.aiEssayScore ?? 0,
       aiEssaySuspected: params.aiEssaySuspected ?? false,
       aiEssayFlags: params.aiEssayFlags ?? [],
@@ -2072,9 +2072,9 @@ class DatabaseStore {
     };
 
     this.members.set(newMember.id, newMember);
-    this._saveToFile();
+    await this._saveToFile();
 
-    
+
     const activity = {
       id: `act_${Date.now()}`,
       memberId: newMember.id,
