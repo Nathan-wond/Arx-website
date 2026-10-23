@@ -265,37 +265,6 @@ export const api = {
   },
 
   
-  async getAdminApplications(status = 'pending') {
-    const qs = status ? `?status=${encodeURIComponent(status)}` : '';
-    return request(`/api/admin/applications${qs}`);
-  },
-
-  async approveAdminApplication(id) {
-    return request(`/api/admin/applications/${id}/approve`, {
-      method: 'PATCH'
-    });
-  },
-
-  async approveApplication(id) {
-    return this.approveAdminApplication(id);
-  },
-
-  async rejectAdminApplication(id, rejectionReason) {
-    return request(`/api/admin/applications/${id}/reject`, {
-      method: 'PATCH',
-      body: JSON.stringify({ rejectionReason })
-    });
-  },
-
-  async rejectApplication(id, rejectionReason) {
-    return this.rejectAdminApplication(id, rejectionReason);
-  },
-
-  async deleteAdminApplication(id) {
-    return request(`/api/admin/applications/${id}`, {
-      method: 'DELETE'
-    });
-  },
 
   async getAdminMembers(q, status) {
     const params = new URLSearchParams();

@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-10-22T16:55:45.908Z",
+  "exportedAt": "2026-10-22T17:42:39.814Z",
   "description": "ARX IT CLUB OF SJS Full Database Export",
   "settings": {
     "clubName": "ARX IT CLUB",
@@ -36,7 +36,7 @@
     "aboutHeroImageUrl": "/uploads/computer-lab-3.svg",
     "aboutTeamImageUrl": "/uploads/student-leadership.svg",
     "certificateStampUrl": "/uploads/academic-seal.svg",
-    "updatedAt": "2026-10-22T16:55:45.822Z"
+    "updatedAt": "2026-10-22T17:16:29.385Z"
   },
   "members": [
     {
@@ -44,7 +44,7 @@
       "memberId": "adminp",
       "studentName": "ARX Presidential Administrator",
       "class": "Club Executive / President",
-      "passwordHash": "e460f5622a5b88ce4d9298daab3dc243:10000:522d7cda58817f883a957470aa7289384c172515d3a9523ecf3159709befe9942b16026315f2257a6424c55d0f3536d59a9e417c1b78f484315ec9c180768d2e",
+      "passwordHash": "6d72f36d8251a2ad7e3792845581c1b4:10000:e77cca939daec9fdbae554f18659a799b1b90c9c66d551d4ed2d84e71c3e0e4ab946eec051417c0b7ad7e457efad1fdccab376698c953498c3134be417799502",
       "phoneNumber": "N/A",
       "telegramUsername": "@arx_president",
       "role": "president",
@@ -63,14 +63,14 @@
         "courses"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-22T16:55:45.831Z"
+      "updatedAt": "2026-10-22T17:16:29.392Z"
     },
     {
       "id": "president_root",
       "memberId": "NEXORA",
       "studentName": "ARX Club President",
       "class": "Club Executive / President",
-      "passwordHash": "e460f5622a5b88ce4d9298daab3dc243:10000:522d7cda58817f883a957470aa7289384c172515d3a9523ecf3159709befe9942b16026315f2257a6424c55d0f3536d59a9e417c1b78f484315ec9c180768d2e",
+      "passwordHash": "6d72f36d8251a2ad7e3792845581c1b4:10000:e77cca939daec9fdbae554f18659a799b1b90c9c66d551d4ed2d84e71c3e0e4ab946eec051417c0b7ad7e457efad1fdccab376698c953498c3134be417799502",
       "phoneNumber": "N/A",
       "telegramUsername": "@arx_president",
       "role": "president",
@@ -88,14 +88,14 @@
         "courses"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-22T16:55:45.831Z"
+      "updatedAt": "2026-10-22T17:16:29.392Z"
     },
     {
       "id": "admin_officer",
       "memberId": "admino",
       "studentName": "ARX Officer Administrator",
       "class": "Club Officer / Moderator",
-      "passwordHash": "b7298171100c72fe8af924c17cf69b7b:10000:f43f3f8436afc2f1a2d7bbca2e3f11227884b8818688602a58341dca7fdcf268c6795642474e27774a220c5e37089b387360b79f08951799081da7b8855268a7",
+      "passwordHash": "121ebb403c1d72a5b3aff11c1495a364:10000:d221561d6363f30cb314cc77971e257a506c39cc65b43de4cc7132175922c1cb287f6533ae65a064b1baa7cbc792bfccbb20e7a67c2cda051cc94fd03fb9117d",
       "phoneNumber": "N/A",
       "telegramUsername": "@itclub_admin",
       "role": "admin",
@@ -111,14 +111,14 @@
         "certificates_issue"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "updatedAt": "2026-10-22T17:16:29.399Z"
     },
     {
       "id": "admin_root",
       "memberId": "ARX-OFFICER-001",
       "studentName": "ARX Operations Officer",
       "class": "Club Officer / Moderator",
-      "passwordHash": "b7298171100c72fe8af924c17cf69b7b:10000:f43f3f8436afc2f1a2d7bbca2e3f11227884b8818688602a58341dca7fdcf268c6795642474e27774a220c5e37089b387360b79f08951799081da7b8855268a7",
+      "passwordHash": "121ebb403c1d72a5b3aff11c1495a364:10000:d221561d6363f30cb314cc77971e257a506c39cc65b43de4cc7132175922c1cb287f6533ae65a064b1baa7cbc792bfccbb20e7a67c2cda051cc94fd03fb9117d",
       "phoneNumber": "N/A",
       "telegramUsername": "@itclub_admin",
       "role": "admin",
@@ -132,7 +132,72 @@
         "courses_view"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "updatedAt": "2026-10-22T17:16:29.399Z"
+    },
+    {
+      "id": "mem_1792689955504_355",
+      "memberId": "ARX-AB94_2E41",
+      "studentName": "Nathan Wondwossen Gedle",
+      "firstName": "Nathan",
+      "secondName": "Wondwossen",
+      "lastName": "Gedle",
+      "class": "11B",
+      "passwordHash": "3c8cd41a63a1326d6ac5ad593eceddab:10000:8cb2df2049ef62cf1bc1797759be7669043cb485529cd20d74631858e51d265e2e19044da06b9cdd54361791f807dc71560f1b40e1a7e070137c23c3228fbfb6",
+      "phoneNumber": "+251911474199",
+      "email": "nathanwondwossen.nw@gmail.com",
+      "telegramUsername": "@becker12221",
+      "award": null,
+      "motivationEssay": "I want to Join the IT club because it enspires me to be a better person across a spectrum of things it is a world of imagination and creativity it is just Peak and i want to learn programming to create apps on my own and be the person everybody want s to be freind with you know what i mean like y shi e e e e e e e e e e e e e e e e e e r r t y y t ttt t t yt yt yty ty tt ty ty tytyt tyty tyty",
+      "essay": "I want to Join the IT club because it enspires me to be a better person across a spectrum of things it is a world of imagination and creativity it is just Peak and i want to learn programming to create apps on my own and be the person everybody want s to be freind with you know what i mean like y shi e e e e e e e e e e e e e e e e e e r r t y y t ttt t t yt yt yty ty tt ty ty tytyt tyty tyty",
+      "aiEssayScore": 0.1,
+      "aiEssaySuspected": false,
+      "aiEssayFlags": [
+        "No contractions or informal language"
+      ],
+      "aiEssayMethod": "heuristic",
+      "aiEssayAnalyzedAt": "2026-10-22T17:25:55.504Z",
+      "role": "member",
+      "status": "approved",
+      "isApproved": true,
+      "isActivated": false,
+      "telegramActivated": true,
+      "rejectionReason": null,
+      "courseIds": [
+        "crs_web_dev",
+        "crs_python"
+      ],
+      "courseId": "crs_web_dev",
+      "createdAt": "2026-10-22T17:25:55.504Z",
+      "updatedAt": "2026-10-22T17:42:39.814Z",
+      "auditTrail": [
+        {
+          "action": "registered",
+          "actorId": "ARX-AB94_2E41",
+          "actorName": "Nathan Wondwossen Gedle",
+          "timestamp": "2026-10-22T17:25:55.504Z",
+          "notes": "Online registration application submitted"
+        },
+        {
+          "action": "approved",
+          "actorId": "admin_presidential",
+          "actorName": "ARX Presidential Administrator",
+          "timestamp": "2026-10-22T17:39:25.969Z",
+          "notes": "Application approved by ARX Presidential Administrator"
+        }
+      ],
+      "approvedAt": "2026-10-22T17:39:25.969Z",
+      "reviewedAt": "2026-10-22T17:39:25.969Z",
+      "approvedBy": {
+        "adminId": "admin_presidential",
+        "adminName": "ARX Presidential Administrator"
+      },
+      "reviewedBy": {
+        "adminId": "admin_presidential",
+        "adminName": "ARX Presidential Administrator"
+      },
+      "telegramUserId": 5957799588,
+      "telegramLinkedAt": "2026-10-22T17:40:17.559Z",
+      "mustChangePassword": false
     }
   ],
   "courses": [
@@ -171,8 +236,8 @@
       "thumbnailMediaId": "med_course_web_dev",
       "bannerMediaId": "med_course_web_dev",
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.837Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "createdAt": "2026-10-22T17:16:29.400Z",
+      "updatedAt": "2026-10-22T17:16:29.400Z"
     },
     {
       "id": "crs_python",
@@ -209,8 +274,8 @@
       "thumbnailMediaId": "med_course_python",
       "bannerMediaId": "med_course_python",
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.837Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "createdAt": "2026-10-22T17:16:29.400Z",
+      "updatedAt": "2026-10-22T17:16:29.400Z"
     },
     {
       "id": "crs_cybersecurity",
@@ -247,8 +312,8 @@
       "thumbnailMediaId": "med_course_cyber",
       "bannerMediaId": "med_course_cyber",
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.837Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "createdAt": "2026-10-22T17:16:29.400Z",
+      "updatedAt": "2026-10-22T17:16:29.400Z"
     },
     {
       "id": "crs_robotics",
@@ -285,8 +350,8 @@
       "thumbnailMediaId": "med_course_robotics",
       "bannerMediaId": "med_course_robotics",
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.837Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "createdAt": "2026-10-22T17:16:29.400Z",
+      "updatedAt": "2026-10-22T17:16:29.400Z"
     },
     {
       "id": "crs_ai&machinelearning",
@@ -323,13 +388,88 @@
       "thumbnailMediaId": "med_course_cyber",
       "bannerMediaId": "med_course_cyber",
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.837Z",
-      "updatedAt": "2026-10-22T16:55:45.837Z"
+      "createdAt": "2026-10-22T17:16:29.400Z",
+      "updatedAt": "2026-10-22T17:16:29.400Z"
     }
   ],
-  "enrollments": [],
+  "enrollments": [
+    {
+      "id": "enr_1792689955510",
+      "memberId": "mem_1792689955504_355",
+      "studentName": "Nathan Wondwossen Gedle",
+      "courseId": "crs_web_dev",
+      "courseTitle": "Web Design & Development",
+      "progress": 0,
+      "status": "In Progress",
+      "enrolledAt": "2026-10-22T17:25:55.510Z"
+    },
+    {
+      "id": "enr_1792689955514",
+      "memberId": "mem_1792689955504_355",
+      "studentName": "Nathan Wondwossen Gedle",
+      "courseId": "crs_python",
+      "courseTitle": "Python",
+      "progress": 0,
+      "status": "In Progress",
+      "enrolledAt": "2026-10-22T17:25:55.514Z"
+    }
+  ],
   "awardFiles": [],
-  "activationSessions": [],
+  "activationSessions": [
+    {
+      "id": "ses_1792689955517_0ffe",
+      "token": "act_1792689955517_7dn89wzxlxt0veio",
+      "activationCode": "ARX-ACT-5741",
+      "shortCode": "5741",
+      "activationCodeExpiresAt": "2026-10-22T17:45:17.559Z",
+      "codeUsed": false,
+      "failedAttempts": 0,
+      "memberId": "ARX-AB94_2E41",
+      "userId": "mem_1792689955504_355",
+      "studentName": "Nathan Wondwossen Gedle",
+      "telegramUsername": "@becker12221",
+      "status": "pending",
+      "channelVerified": true,
+      "createdAt": "2026-10-22T17:25:55.517Z",
+      "expiresAt": "2026-10-23T17:25:55.517Z",
+      "telegramUserId": 5957799588,
+      "verifiedTelegramUsername": "@becker12221"
+    },
+    {
+      "id": "ses_1792690313180_j0h1",
+      "token": "act_1792690313180_k17p15u4eng8ywtm",
+      "activationCode": null,
+      "shortCode": null,
+      "activationCodeExpiresAt": null,
+      "codeUsed": false,
+      "failedAttempts": 0,
+      "memberId": "admino",
+      "userId": "admin_officer",
+      "studentName": "ARX Officer Administrator",
+      "telegramUsername": "@itclub_admin",
+      "status": "pending",
+      "channelVerified": false,
+      "createdAt": "2026-10-22T17:31:53.180Z",
+      "expiresAt": "2026-10-23T17:31:53.180Z"
+    },
+    {
+      "id": "ses_1792690402909_1dpy",
+      "token": "act_1792690402909_8e3951qpov930wvv",
+      "activationCode": null,
+      "shortCode": null,
+      "activationCodeExpiresAt": null,
+      "codeUsed": false,
+      "failedAttempts": 0,
+      "memberId": "adminp",
+      "userId": "admin_presidential",
+      "studentName": "ARX Presidential Administrator",
+      "telegramUsername": "@arx_president",
+      "status": "pending",
+      "channelVerified": false,
+      "createdAt": "2026-10-22T17:33:22.909Z",
+      "expiresAt": "2026-10-23T17:33:22.909Z"
+    }
+  ],
   "telegramUserStates": [],
   "certificates": [
     {
@@ -354,7 +494,7 @@
         }
       ],
       "qrData": "https://arx-website-sjs.vercel.app/#certificates?id=ARX-CYBER-2026-10492",
-      "createdAt": "2026-10-22T16:55:45.838Z"
+      "createdAt": "2026-10-22T17:16:29.400Z"
     }
   ],
   "awards": [],
@@ -362,10 +502,189 @@
   "events": [],
   "achievements": [],
   "announcements": [],
-  "activities": [],
-  "telegramBroadcasts": [],
+  "activities": [
+    {
+      "id": "act_1792689955510",
+      "memberId": "mem_1792689955504_355",
+      "title": "Submitted Membership Application (Pending Review)",
+      "date": "2026-10-22T17:25:55.504Z",
+      "timeAgo": "Just now",
+      "type": "course"
+    },
+    {
+      "id": "act_1792689955513",
+      "memberId": "mem_1792689955504_355",
+      "title": "Enrolled in Web Design & Development",
+      "date": "2026-10-22T17:25:55.513Z",
+      "timeAgo": "Just now",
+      "type": "course"
+    },
+    {
+      "id": "act_1792689955516",
+      "memberId": "mem_1792689955504_355",
+      "title": "Enrolled in Python",
+      "date": "2026-10-22T17:25:55.516Z",
+      "timeAgo": "Just now",
+      "type": "course"
+    },
+    {
+      "id": "act_1792690765972_43",
+      "memberId": "mem_1792689955504_355",
+      "title": "Membership Application Approved by ARX Presidential Administrator",
+      "date": "2026-10-22T17:39:25.969Z",
+      "timeAgo": "Just now",
+      "type": "course"
+    }
+  ],
+  "telegramBroadcasts": [
+    {
+      "id": "tb_1",
+      "postId": 101,
+      "author": "ARX IT CLUB OF SJS Admin",
+      "channelName": "ARX IT CLUB OF SJS Official",
+      "channelHandle": "@arxitclub",
+      "date": "Today",
+      "time": "09:00 AM",
+      "content": "📌 Welcome to the official ARX IT CLUB OF SJS communication feed!\n\nAll members can now view live broadcasts, lab opening hours, and curriculum notices directly from this integrated dashboard. No external app search required.\n\n📍 Computer Lab 3 (Highschool)\n🕒 Lab Sessions: Mon & Thu 3:30 PM - 5:30 PM",
+      "tags": [
+        "#announcements",
+        "#lab",
+        "#welcome"
+      ],
+      "pinned": true,
+      "views": 184,
+      "reactions": [
+        {
+          "emoji": "🔥",
+          "count": 24
+        },
+        {
+          "emoji": "🚀",
+          "count": 18
+        },
+        {
+          "emoji": "❤️",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "id": "tb_2",
+      "postId": 102,
+      "author": "Technical Lead",
+      "channelName": "ARX IT CLUB OF SJS Official",
+      "channelHandle": "@arxitclub",
+      "date": "Yesterday",
+      "time": "03:15 PM",
+      "content": "⚡ Technical Workshop: Modern Full-Stack Workflows with React & Node.js.\n\nWe will review REST API architecture, secure auth patterns, and repository workflows. Check the Club Resources tab below for prerequisite starter files and cheat sheets!\n\nBring your laptop or use Lab 3 workstations.",
+      "tags": [
+        "#workshops",
+        "#webdev",
+        "#curriculum"
+      ],
+      "views": 142,
+      "reactions": [
+        {
+          "emoji": "💡",
+          "count": 19
+        },
+        {
+          "emoji": "🚀",
+          "count": 15
+        },
+        {
+          "emoji": "👍",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "id": "tb_3",
+      "postId": 103,
+      "author": "ARX Executive Council",
+      "channelName": "ARX IT CLUB OF SJS Official",
+      "channelHandle": "@arxitclub",
+      "date": "2 days ago",
+      "time": "11:45 AM",
+      "content": "🛡️ Verified Landscape Certificates are live!\n\nAll completed courses now issue tamper-proof certificates in landscape format featuring official signatures, academic seals, and public verification QR codes. Access yours anytime under My Certificates.",
+      "tags": [
+        "#certificates",
+        "#academics"
+      ],
+      "views": 210,
+      "reactions": [
+        {
+          "emoji": "🔥",
+          "count": 32
+        },
+        {
+          "emoji": "🎉",
+          "count": 28
+        },
+        {
+          "emoji": "❤️",
+          "count": 16
+        }
+      ]
+    }
+  ],
   "studentProjectSubmissions": [],
-  "attendanceSessions": [],
+  "attendanceSessions": [
+    {
+      "id": "att_sess_web_dev",
+      "courseId": "crs_web_dev",
+      "courseTitle": "Web Design & Development",
+      "title": "Lab 3: Modern Component Architecture & Responsive UI",
+      "date": "2026-10-22",
+      "ethiopianOpenTime": "07:00",
+      "ethiopianPresentCutoff": "07:30",
+      "ethiopianLateCutoff": "07:40",
+      "internationalOpenTime": "13:00",
+      "internationalPresentCutoff": "13:30",
+      "internationalLateCutoff": "13:40",
+      "instructions": "Computer Lab 3 attendance check-in. Sign in with your Member ID and account password between 7:00 and 7:40 Ethiopian time.",
+      "status": "published",
+      "createdBy": "Club Admin",
+      "createdAt": "2026-10-22T17:16:29.503Z",
+      "updatedAt": "2026-10-22T17:16:29.503Z"
+    },
+    {
+      "id": "att_sess_python",
+      "courseId": "crs_python",
+      "courseTitle": "Python Programming",
+      "title": "Lab 4: Data Structures & Problem Solving in Python",
+      "date": "2026-10-22",
+      "ethiopianOpenTime": "07:00",
+      "ethiopianPresentCutoff": "07:30",
+      "ethiopianLateCutoff": "07:40",
+      "internationalOpenTime": "13:00",
+      "internationalPresentCutoff": "13:30",
+      "internationalLateCutoff": "13:40",
+      "instructions": "Sign in with your Member ID and password between 7:00 and 7:40 Ethiopian time.",
+      "status": "published",
+      "createdBy": "Club Admin",
+      "createdAt": "2026-10-22T17:16:29.503Z",
+      "updatedAt": "2026-10-22T17:16:29.503Z"
+    },
+    {
+      "id": "att_sess_general",
+      "courseId": "general",
+      "courseTitle": "General Lab Session",
+      "title": "Computer Lab 3 General Assembly & Project Clinic",
+      "date": "2026-10-22",
+      "ethiopianOpenTime": "07:00",
+      "ethiopianPresentCutoff": "07:30",
+      "ethiopianLateCutoff": "07:40",
+      "internationalOpenTime": "13:00",
+      "internationalPresentCutoff": "13:30",
+      "internationalLateCutoff": "13:40",
+      "instructions": "Open to all active ARX IT Club members.",
+      "status": "published",
+      "createdBy": "Club President",
+      "createdAt": "2026-10-22T17:16:29.503Z",
+      "updatedAt": "2026-10-22T17:16:29.503Z"
+    }
+  ],
   "attendanceSessionConfigs": [
     {
       "id": "session_afternoon",
@@ -382,9 +701,106 @@
     }
   ],
   "attendanceRecords": [],
-  "assignments": [],
+  "assignments": [
+    {
+      "id": "asg_py_01",
+      "title": "Python CLI Calculator & Unit Tests",
+      "description": "Build a modular command-line calculator in Python supporting basic arithmetic, exponentiation, and error handling for division by zero. Include at least 3 unit tests.",
+      "courseId": "course_python",
+      "courseTitle": "Python Programming Masterclass",
+      "deadline": "2026-10-29T17:16:29.478Z",
+      "maxScore": 100,
+      "instructions": "Submit a single .py file or a .zip archive containing your calculator.py and test_calculator.py files. Follow PEP 8 style standards.",
+      "isPublished": true,
+      "createdAt": "2026-10-22T17:16:29.478Z",
+      "updatedAt": "2026-10-22T17:16:29.478Z"
+    },
+    {
+      "id": "asg_web_01",
+      "title": "Responsive Portfolio Page (HTML/CSS)",
+      "description": "Design and code a semantic, accessible single-page portfolio using HTML5 and CSS3 with responsive viewport breakpoints (mobile & desktop).",
+      "courseId": "course_web_dev",
+      "courseTitle": "Full-Stack Web Engineering",
+      "deadline": "2026-11-01T17:16:29.478Z",
+      "maxScore": 100,
+      "instructions": "Submit your index.html and style.css or a compressed .zip archive. Ensure valid markup without inline style attributes.",
+      "isPublished": true,
+      "createdAt": "2026-10-22T17:16:29.478Z",
+      "updatedAt": "2026-10-22T17:16:29.478Z"
+    },
+    {
+      "id": "asg_cyber_01",
+      "title": "Network Reconnaissance & Port Scanning Lab Report",
+      "description": "Document the methodology and findings from the Computer Lab 3 ethical port reconnaissance exercise on the isolated test subnet.",
+      "courseId": "course_cybersecurity",
+      "courseTitle": "Cybersecurity Fundamentals",
+      "deadline": "2026-11-05T17:16:29.478Z",
+      "maxScore": 100,
+      "instructions": "Submit a PDF report detailing open ports, service banners, and defensive hardening recommendations.",
+      "isPublished": true,
+      "createdAt": "2026-10-22T17:16:29.478Z",
+      "updatedAt": "2026-10-22T17:16:29.478Z"
+    }
+  ],
   "assignmentSubmissions": [],
-  "clubResources": [],
+  "clubResources": [
+    {
+      "id": "res_1",
+      "title": "ARX Full-Stack Web Development Handbook",
+      "category": "Handbook",
+      "description": "Complete student reference guide covering semantic HTML5, modern Tailwind CSS, React 19 hooks, and Express backend patterns.",
+      "format": "PDF / Markdown",
+      "fileSize": "4.2 MB",
+      "version": "v2.4 (2026)",
+      "tags": [
+        "Web Dev",
+        "TypeScript",
+        "React"
+      ]
+    },
+    {
+      "id": "res_2",
+      "title": "Python DSA & Problem Solving Starter Kit",
+      "category": "Starter Kit",
+      "description": "Hands-on repository scaffold containing data structures, automated unit tests, and algorithmic exercises for club coding rounds.",
+      "format": "ZIP Archive",
+      "fileSize": "1.8 MB",
+      "version": "v1.6",
+      "tags": [
+        "Python",
+        "Algorithms",
+        "Tests"
+      ]
+    },
+    {
+      "id": "res_3",
+      "title": "Git & GitHub Team Collaboration Cheatsheet",
+      "category": "Cheatsheet",
+      "description": "Essential terminal commands, pull request guidelines, conflict resolution techniques, and conventional commit standards.",
+      "format": "PDF Quickref",
+      "fileSize": "820 KB",
+      "version": "v3.0",
+      "tags": [
+        "Git",
+        "GitHub",
+        "Workflow"
+      ]
+    },
+    {
+      "id": "res_4",
+      "title": "Computer Lab 3 SSH & Dev Environment Setup",
+      "category": "Lab Access",
+      "description": "Step-by-step instructions for connecting to the school IT lab server, local port forwarding, and VS Code remote extension.",
+      "format": "Technical Doc",
+      "fileSize": "1.1 MB",
+      "version": "v2026.1",
+      "tags": [
+        "Linux",
+        "SSH",
+        "Lab"
+      ]
+    }
+  ],
   "media": [
     {
       "id": "med_brand_logo",
@@ -790,9 +1206,9 @@
       "icon": "send",
       "isEnabled": true,
       "order": 1,
-      "id": "soc_1792688145838_300",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_827",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "platform": "Instagram",
@@ -801,9 +1217,9 @@
       "icon": "instagram",
       "isEnabled": true,
       "order": 2,
-      "id": "soc_1792688145838_418",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_540",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "platform": "LinkedIn",
@@ -812,9 +1228,9 @@
       "icon": "linkedin",
       "isEnabled": false,
       "order": 3,
-      "id": "soc_1792688145838_778",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_800",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "platform": "X",
@@ -823,9 +1239,9 @@
       "icon": "twitter",
       "isEnabled": false,
       "order": 4,
-      "id": "soc_1792688145838_361",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_805",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "platform": "Facebook",
@@ -834,9 +1250,9 @@
       "icon": "facebook",
       "isEnabled": false,
       "order": 5,
-      "id": "soc_1792688145838_203",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_202",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "platform": "TikTok",
@@ -845,9 +1261,9 @@
       "icon": "video",
       "isEnabled": false,
       "order": 6,
-      "id": "soc_1792688145838_346",
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "id": "soc_1792689389401_736",
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     }
   ],
   "governance": [
@@ -865,8 +1281,8 @@
       "order": 1,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.838Z",
-      "updatedAt": "2026-10-22T16:55:45.838Z"
+      "createdAt": "2026-10-22T17:16:29.401Z",
+      "updatedAt": "2026-10-22T17:16:29.401Z"
     },
     {
       "id": "gov_yohannes_nigatu",
@@ -882,8 +1298,8 @@
       "order": 2,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.868Z",
-      "updatedAt": "2026-10-22T16:55:45.868Z"
+      "createdAt": "2026-10-22T17:16:29.433Z",
+      "updatedAt": "2026-10-22T17:16:29.433Z"
     },
     {
       "id": "gov_nathan_haddis",
@@ -899,8 +1315,8 @@
       "order": 3,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.875Z",
-      "updatedAt": "2026-10-22T16:55:45.875Z"
+      "createdAt": "2026-10-22T17:16:29.439Z",
+      "updatedAt": "2026-10-22T17:16:29.439Z"
     },
     {
       "id": "gov_natan_yonas",
@@ -909,15 +1325,15 @@
       "specialty": "Robotics Instructor",
       "department": "Robotics & Hardware",
       "category": "leadership",
-      "description": "Chief Technology Officer & Lead Robotics Instructor. Directs technical architecture, robotics prototyping, and embedded micro-controller projects.",
+      "description": "Chief Technology Officer & Lead Robotics Instructor. Directs technical architecture, robotics prototyping, and embedded systems engineering.",
       "photoUrl": "/team/me.jpg?v=2",
       "positionOffset": "center center",
       "socialLinks": {},
       "order": 4,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.882Z",
-      "updatedAt": "2026-10-22T16:55:45.882Z"
+      "createdAt": "2026-10-22T17:16:29.450Z",
+      "updatedAt": "2026-10-22T17:16:29.450Z"
     },
     {
       "id": "gov_nathan_wendesen",
@@ -933,8 +1349,8 @@
       "order": 5,
       "isUniqueRole": false,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.889Z",
-      "updatedAt": "2026-10-22T16:55:45.889Z"
+      "createdAt": "2026-10-22T17:16:29.455Z",
+      "updatedAt": "2026-10-22T17:16:29.455Z"
     },
     {
       "id": "gov_abenezer_ameha",
@@ -950,117 +1366,216 @@
       "order": 6,
       "isUniqueRole": false,
       "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.896Z",
-      "updatedAt": "2026-10-22T16:55:45.896Z"
-    },
-    {
-      "id": "gov_nafyad_bayissa",
-      "name": "Nafyad Bayissa",
-      "role": "Python Instructor",
-      "specialty": "Python Instructor",
-      "department": "Python Programming",
-      "category": "instructor",
-      "description": "Teaches foundational and advanced Python syntax, object-oriented concepts, scripting automation, and computational thinking.",
-      "photoUrl": "/team/nafyad.jpg",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 7,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.901Z",
-      "updatedAt": "2026-10-22T16:55:45.901Z"
-    },
-    {
-      "id": "gov_firaol_tadesse",
-      "name": "Firaol Tadesse",
-      "role": "Python Instructor",
-      "specialty": "Python Instructor",
-      "department": "Python Programming",
-      "category": "instructor",
-      "description": "Teaches Python programming foundations, problem solving, and hands-on laboratory exercises for student developers.",
-      "photoUrl": "/team/firaol.png",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 8,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-22T16:55:45.908Z",
-      "updatedAt": "2026-10-22T16:55:45.908Z"
+      "createdAt": "2026-10-22T17:16:29.462Z",
+      "updatedAt": "2026-10-22T17:16:29.462Z"
     }
   ],
-  "botCommands": [],
+  "botCommands": [
+    {
+      "command": "/start",
+      "description": "Welcome experience, member dashboard & quick navigation",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/help",
+      "description": "Complete command directory, guides & instructions",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/menu",
+      "description": "Interactive quick-access menu buttons",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/dashboard",
+      "description": "Student learning dashboard, active tracks & credentials",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/account",
+      "description": "View student member ID, credentials, class, and statistics",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/profile",
+      "description": "View student profile and membership details",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/courses",
+      "description": "Explore curriculum tracks and your enrollment progress",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/certificates",
+      "description": "View verified landscape certificates and credential IDs",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/announcements",
+      "description": "Read official club announcements and channel notices",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/events",
+      "description": "View upcoming workshops and tech talks in Computer Lab 3",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/workshops",
+      "description": "Upcoming hands-on lab workshops and hardware clinics",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/attendance",
+      "description": "Check session attendance rate and certificate qualification",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/assignments",
+      "description": "View active course assignments, homework tasks & deadlines",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/resources",
+      "description": "Access developer handbooks, starter kits, and cheatsheets",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/lab",
+      "description": "Computer Lab 3 hours, guidelines, and workstation policies",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/support",
+      "description": "Help desk, coordinator contact details, and lab office hours",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/tickets",
+      "description": "Support tickets, equipment help & advisor assistance",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/settings",
+      "description": "Membership settings, linked Telegram profile & preferences",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/website",
+      "description": "Official ARX IT CLUB OF SJS website & web portal links",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/channel",
+      "description": "Official Telegram announcement channel (@arxitclub)",
+      "isEnabled": true,
+      "showInMenu": false
+    },
+    {
+      "command": "/status",
+      "description": "Quick member verification & credentials lookup",
+      "isEnabled": true,
+      "showInMenu": true
+    },
+    {
+      "command": "/cancel",
+      "description": "Cancel any ongoing activation or input interaction",
+      "isEnabled": true,
+      "showInMenu": false
+    }
+  ],
   "auditLogs": [
     {
-      "id": "aud_1792688145908_324",
+      "id": "aud_1792689389472_292",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_firaol_tadesse",
       "targetName": "Firaol Tadesse",
       "details": "Added new team member Firaol Tadesse (Python Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.908Z"
+      "timestamp": "2026-10-22T17:16:29.472Z"
     },
     {
-      "id": "aud_1792688145902_403",
+      "id": "aud_1792689389467_737",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nafyad_bayissa",
       "targetName": "Nafyad Bayissa",
       "details": "Added new team member Nafyad Bayissa (Python Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.901Z"
+      "timestamp": "2026-10-22T17:16:29.467Z"
     },
     {
-      "id": "aud_1792688145896_149",
+      "id": "aud_1792689389462_145",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_abenezer_ameha",
       "targetName": "Abenezer Ameha",
       "details": "Added new team member Abenezer Ameha (Software Engineering Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.896Z"
+      "timestamp": "2026-10-22T17:16:29.462Z"
     },
     {
-      "id": "aud_1792688145889_42",
+      "id": "aud_1792689389455_141",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nathan_wendesen",
       "targetName": "Nathan Wendesen",
       "details": "Added new team member Nathan Wendesen (Front-End Development Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.889Z"
+      "timestamp": "2026-10-22T17:16:29.455Z"
     },
     {
-      "id": "aud_1792688145882_704",
+      "id": "aud_1792689389450_545",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_natan_yonas",
       "targetName": "Natan Yonas",
       "details": "Added new team member Natan Yonas (Chief Technology Officer (CTO)) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.882Z"
+      "timestamp": "2026-10-22T17:16:29.450Z"
     },
     {
-      "id": "aud_1792688145875_437",
+      "id": "aud_1792689389439_22",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nathan_haddis",
       "targetName": "Nathan Haddis",
       "details": "Added new team member Nathan Haddis (Chief Marketing Officer) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.875Z"
+      "timestamp": "2026-10-22T17:16:29.439Z"
     },
     {
-      "id": "aud_1792688145868_147",
+      "id": "aud_1792689389434_177",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_yohannes_nigatu",
       "targetName": "Yohannes Nigatu",
       "details": "Added new team member Yohannes Nigatu (Vice President) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.868Z"
+      "timestamp": "2026-10-22T17:16:29.433Z"
     },
     {
-      "id": "aud_1792688145838_601",
+      "id": "aud_1792689389401_889",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_kidus_elias",
       "targetName": "Kidus Elias",
       "details": "Added new team member Kidus Elias (President) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-22T16:55:45.838Z"
+      "timestamp": "2026-10-22T17:16:29.401Z"
     }
   ]
 }
