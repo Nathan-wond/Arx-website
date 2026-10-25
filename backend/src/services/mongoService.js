@@ -150,11 +150,18 @@ export async function readDbAsync() {
         const doc    = await Model.findOne({ key: 'global' }).lean().exec();
         if (doc && doc.payload && doc.payload.members && doc.payload.members.length > 0) {
           const data = doc.payload;
-          // Merge with local (keep local as base, overlay MongoDB data)
-          const merged = { ...local, ...data };
+          // Merge with local: keep local as base, overlay MongoDB data, and merge members by ID
+          const localMembers = Array.isArray(local?.members) ? local.members : [];
+          const remoteMembers = Array.isArray(data?.members) ? data.members : [];
+          const memberMap = new Map();
+          for (const m of remoteMembers) if (m && m.id) memberMap.set(m.id, m);
+          for (const m of localMembers) if (m && m.id) memberMap.set(m.id, m);
+          const mergedMembers = Array.from(memberMap.values());
+
+          const merged = { ...local, ...data, members: mergedMembers };
           _cache = merged;
           localWrite(merged);
-          console.log('[MongoDB] ✅ State loaded from MongoDB. Members:', data.members?.length ?? 0);
+          console.log('[MongoDB] ✅ State loaded from MongoDB. Members:', mergedMembers.length);
           return merged;
         } else if (local) {
           // MongoDB is empty – seed it from local JSON
@@ -190,12 +197,14 @@ async function _writeMongo(data) {
     await Model.findOneAndUpdate(
       { key: 'global' },
       {
-        key:        'global',
-        payload:    data,
-        exportedAt: new Date()
+        $set: {
+          key:        'global',
+          payload:    data,
+          exportedAt: new Date()
+        }
       },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+      { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
+    ).exec();
     return true;
   } catch (err) {
     console.warn('[MongoDB] ⚠️  Write error:', err?.message || err);

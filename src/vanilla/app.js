@@ -1,5 +1,6 @@
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { authState, themeState, router, modalState, events } from './state.js';
+import { getStoredToken } from '../services/api.js';
 import { renderNavbar, initNavbarEvents } from './components/navbar.js';
 import { renderFooter } from './components/footer.js';
 import { renderPortalSidebar } from './components/portalSidebar.js';
@@ -31,7 +32,7 @@ import { renderChangePasswordPage, initChangePasswordPageEvents } from './pages/
 
 // Admin & President Pages
 import { renderAdminLoginPage, initAdminLoginPageEvents } from './pages/admin/adminLogin.js';
-import { renderAdminDashboardPage } from './pages/admin/adminDashboard.js';
+import { renderAdminDashboardPage, initAdminDashboardPageEvents } from './pages/admin/adminDashboard.js';
 import { renderPresidentDashboardPage, initPresidentDashboardPageEvents } from './pages/president/presidentDashboard.js';
 import {
   ADMIN_PATH,
@@ -93,6 +94,23 @@ function renderCurrentRoute() {
   const isPortalRoute = currentPath.startsWith('/portal');
   const isAdminDashboard = isAdminDashboardRoute(currentPath);
   const isPresDashboard = isPresidentDashboardRoute(currentPath);
+
+  // If initial profile check is still pending and a token is stored, display clean loading state
+  // to avoid flashing the login screen or making premature redirects
+  if (isLoading && getStoredToken()) {
+    if (isPortalRoute || isAdminDashboard || isPresDashboard) {
+      root.innerHTML = `
+        <div class="min-h-screen flex items-center justify-center bg-[var(--bg)] text-[var(--text)] font-sans">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-8 h-8 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-xs font-mono uppercase tracking-wider text-[var(--text)]/60">Verifying session...</p>
+          </div>
+        </div>
+      `;
+      isRendering = false;
+      return;
+    }
+  }
 
   // Route protection
   if (!isLoading) {
@@ -169,6 +187,9 @@ function renderCurrentRoute() {
     if (modalState.activeCertificate) {
       initCertificateModalEvents(modalState.activeCertificate);
     }
+    if (typeof initAdminDashboardPageEvents === 'function') {
+      initAdminDashboardPageEvents();
+    }
     bindNavigationLinks(root);
     isRendering = false;
     return;
@@ -195,6 +216,7 @@ function renderCurrentRoute() {
       initEventsFn = initAdminLoginPageEvents;
     } else {
       pageHtml = renderAdminDashboardPage();
+      initEventsFn = initAdminDashboardPageEvents;
     }
   } else if (currentPath.startsWith('/courses/') && currentPath.split('?')[0].replace('/courses/', '').trim()) {
     const courseId = currentPath.split('?')[0].replace('/courses/', '').trim();

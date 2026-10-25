@@ -52,7 +52,7 @@ async function startServer() {
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
         "img-src 'self' data: blob: https:",
-        "connect-src 'self' https://api.telegram.org",
+        "connect-src 'self' https://api.telegram.org https://*.ngrok-free.dev https://*.ngrok-free.app https://*.ngrok.app https://*.ngrok.io https://*.ngrok.com",
         "frame-ancestors 'none'",
         "base-uri 'self'",
         "form-action 'self'"
@@ -88,10 +88,12 @@ async function startServer() {
           origin.endsWith('.vercel.app') ||
           origin.includes('localhost') ||
           origin.includes('127.0.0.1') ||
-          // BUG FIX: Allow ngrok tunnel domains so Telegram bot works in development
+          // Allow all ngrok tunnel domains
           origin.endsWith('.ngrok.io') ||
           origin.endsWith('.ngrok-free.app') ||
-          origin.endsWith('.ngrok.app')
+          origin.endsWith('.ngrok-free.dev') ||
+          origin.endsWith('.ngrok.app') ||
+          origin.endsWith('.ngrok.com')
         ) {
           callback(null, true);
         } else {
@@ -100,7 +102,7 @@ async function startServer() {
       },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization']
+      allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning', 'X-Requested-With', 'Accept']
     }));
   }
 
@@ -185,7 +187,7 @@ async function startServer() {
 
   // Server-side guarded admin application views
   app.get(['/admin-applications.html', '/71354caa6bea2251/applications'], adminViewGuard, (_req, res) => {
-    res.sendFile(path.resolve(__dirname, 'private_views', 'admin-applications.html'));
+    res.redirect('/71354caa6bea2251/dashboard');
   });
 
   app.get('/dashboard.html', (_req, res) => {
@@ -200,10 +202,9 @@ async function startServer() {
   if (!isProduction) {
     const { createServer: createViteServer } = await import('vite');
     const tailwindcss = (await import('@tailwindcss/vite')).default;
-    const reactPlugin = (await import('@vitejs/plugin-react')).default;
     const vite = await createViteServer({
       configFile: false,
-      plugins: [reactPlugin(), tailwindcss()],
+      plugins: [tailwindcss()],
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.')

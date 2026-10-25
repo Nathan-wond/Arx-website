@@ -5691,3 +5691,7 @@ export function renderAdminDashboardPage() {
     </div>
   `;
 }
+
+export function initAdminDashboardPageEvents() {
+  bindEvents();
+}

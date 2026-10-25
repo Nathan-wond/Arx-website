@@ -1139,45 +1139,6 @@ export const adminController = {
     }
   },
 
-  changeAdminPassword(req, res) {
-    try {
-      const adminId = req.user?.id;
-      const { currentPassword, newPassword } = req.body || {};
-      if (!currentPassword || !newPassword) {
-        res.status(400).json({ success: false, error: 'Current password and new password are required.' });
-        return;
-      }
-      if (newPassword.length < 6) {
-        res.status(400).json({ success: false, error: 'New password must be at least 6 characters long.' });
-        return;
-      }
-      const admin = db.findMemberById(adminId);
-      if (!admin || (admin.role !== 'admin' && admin.role !== 'president')) {
-        res.status(404).json({ success: false, error: 'Administrator account not found.' });
-        return;
-      }
-
-      if (admin.passwordHash && !verifyPassword(currentPassword, admin.passwordHash)) {
-        res.status(401).json({ success: false, error: 'Current security passphrase is incorrect.' });
-        return;
-      }
-
-      admin.passwordHash = hashPassword(newPassword);
-      admin.mustChangePassword = false;
-      admin.updatedAt = new Date().toISOString();
-      db.logAuditEvent({
-        actor: admin.studentName || 'Administrator',
-        action: 'CHANGE_OWN_PASSWORD',
-        details: `Administrator ${admin.studentName} (${admin.memberId}) updated their security password.`
-      });
-      db._saveToFile();
-      res.json({ success: true, message: 'Password changed successfully. Your account is secured.' });
-    } catch (err) {
-      console.error('[Admin] changeAdminPassword error:', err);
-      res.status(500).json({ success: false, error: err.message || 'Failed to change password.' });
-    }
-  },
-
   
   getSocialLinks(_req, res) {
     const links = db.getSocialLinks();

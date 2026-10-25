@@ -160,20 +160,13 @@ class DatabaseStore {
 
         
         if (Array.isArray(data.members)) {
-          const incomingIds = new Set(data.members.map((m) => m && m.id).filter(Boolean));
-          for (const [id, m] of this.members.entries()) {
-            if (m.role !== 'admin' && m.role !== 'president' && id !== 'admin_root' && id !== 'president_root') {
-              if (!incomingIds.has(id)) {
-                this.members.delete(id);
-              }
-            }
-          }
           for (const m of data.members) {
             if (m && m.id) this.members.set(m.id, m);
           }
         }
 
         
+        let needsSave = false;
         // Ensure Presidential Administrator Account (adminp)
         let presMember = this.members.get('admin_presidential') || this.members.get('president_root');
         const configuredPresPassword = (process.env.PRESIDENT_PASSWORD || CONFIG.PRESIDENT_PASSWORD || '').trim();
@@ -195,7 +188,7 @@ class DatabaseStore {
             updatedAt: new Date().toISOString()
           };
           this.members.set(presAccount.id, presAccount);
-          this._saveToFile();
+          needsSave = true;
         }
 
         // Ensure legacy president_root remains synced
@@ -217,7 +210,7 @@ class DatabaseStore {
             updatedAt: new Date().toISOString()
           };
           this.members.set(legacyPres.id, legacyPres);
-          this._saveToFile();
+          needsSave = true;
         }
 
         // Ensure Officer Administrator Account (admino)
@@ -240,7 +233,7 @@ class DatabaseStore {
             updatedAt: new Date().toISOString()
           };
           this.members.set(officerAccount.id, officerAccount);
-          this._saveToFile();
+          needsSave = true;
         }
 
         // Ensure legacy admin_root remains synced
@@ -262,7 +255,7 @@ class DatabaseStore {
             updatedAt: new Date().toISOString()
           };
           this.members.set(legacyOfficer.id, legacyOfficer);
-          this._saveToFile();
+          needsSave = true;
         }
 
         if (Array.isArray(data.auditLogs)) {
@@ -455,6 +448,9 @@ class DatabaseStore {
 
         this.isFileHydrated = true;
         this.lastFileSync = Date.now();
+        if (needsSave) {
+          this._saveToFile();
+        }
         console.log('[FileDB] Loaded from arx_database.json:', {
           members: this.members.size,
           awardFiles: this.memberAwardFiles.size,

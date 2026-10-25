@@ -29,9 +29,10 @@ const forgotPasswordLimiter = createRateLimiter({
   message: 'Too many password reset requests. Please wait a few minutes and try again.'
 });
 
+const isProduction = process.env.NODE_ENV === 'production';
 const adminLoginLimiter = createRateLimiter({
   windowMs: 5 * 60 * 1000,
-  max: 5,
+  max: isProduction ? 5 : 50,
   message: 'Too many administrative login attempts. Please wait 5 minutes before trying again.'
 });
 

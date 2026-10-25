@@ -646,27 +646,34 @@ function renderApplicationsTab() {
             Review student registrations with presidential authority. Inspect both selected course tracks and grant immediate portal access.
           </p>
         </div>
-        <div class="flex items-center gap-1.5 p-1 bg-[#282828]/5 dark:bg-[#0A211A] rounded-lg border border-[#282828]/10 dark:border-[#25473C] text-xs font-mono">
+        <div class="flex items-center gap-2">
           <button
-            data-app-filter="pending"
-            class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'pending' ? 'bg-[#FC6454] text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-[#FC6454]'}">
-            Pending (${pendingCount})
+            id="btn-refresh-pres-apps"
+            class="px-3 py-1.5 rounded-lg border border-[#282828]/20 dark:border-[#25473C] bg-white dark:bg-[#102B22] text-[#282828] dark:text-white hover:border-[#FC6454] text-xs font-mono font-medium flex items-center gap-1.5 transition-colors cursor-pointer">
+            ${icon('RefreshCw', 'w-3.5 h-3.5')} Refresh
           </button>
-          <button
-            data-app-filter="approved"
-            class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'approved' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-emerald-500'}">
-            Approved (${approvedCount})
-          </button>
-          <button
-            data-app-filter="rejected"
-            class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'rejected' ? 'bg-rose-600 text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-rose-500'}">
-            Declined (${rejectedCount})
-          </button>
-          <button
-            data-app-filter="all"
-            class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'all' ? 'bg-[#282828] dark:bg-white text-white dark:text-[#071A14] shadow-2xs' : 'text-[#282828]/70 dark:text-white'}">
-            All (${applicationsList.length})
-          </button>
+          <div class="flex items-center gap-1.5 p-1 bg-[#282828]/5 dark:bg-[#0A211A] rounded-lg border border-[#282828]/10 dark:border-[#25473C] text-xs font-mono">
+            <button
+              data-app-filter="pending"
+              class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'pending' ? 'bg-[#FC6454] text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-[#FC6454]'}">
+              Pending (${pendingCount})
+            </button>
+            <button
+              data-app-filter="approved"
+              class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'approved' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-emerald-500'}">
+              Approved (${approvedCount})
+            </button>
+            <button
+              data-app-filter="rejected"
+              class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'rejected' ? 'bg-rose-600 text-white shadow-2xs' : 'text-[#282828]/70 dark:text-white hover:text-rose-500'}">
+              Declined (${rejectedCount})
+            </button>
+            <button
+              data-app-filter="all"
+              class="px-3 py-1.5 rounded-md font-semibold cursor-pointer transition-colors ${applicationFilter === 'all' ? 'bg-[#282828] dark:bg-white text-white dark:text-[#071A14] shadow-2xs' : 'text-[#282828]/70 dark:text-white'}">
+              All (${applicationsList.length})
+            </button>
+          </div>
         </div>
       </div>
 
@@ -2198,7 +2205,11 @@ function attachEvents() {
   // Sidebar tab changes
   initPresidentSidebarEvents((newTab) => {
     activeTab = newTab;
-    updateDOM();
+    if (newTab === 'applications') {
+      loadPresidentData();
+    } else {
+      updateDOM();
+    }
   });
 
   // Top header actions
@@ -2444,6 +2455,17 @@ function attachEvents() {
       updateDOM();
     };
   });
+
+  // Refresh Applications Button
+  const refreshAppsBtn = document.getElementById('btn-refresh-pres-apps');
+  if (refreshAppsBtn) {
+    refreshAppsBtn.onclick = async () => {
+      refreshAppsBtn.disabled = true;
+      showFeedback('info', 'Refreshing applications...');
+      await loadPresidentData();
+      showFeedback('success', 'Applications list refreshed.');
+    };
+  }
 
   // Approve / Reject / Delete Applications
   document.querySelectorAll('[data-action="approve-app"]').forEach(btn => {

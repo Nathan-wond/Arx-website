@@ -25,6 +25,7 @@ export function getCookie(req, name) {
 // ---------------------------------------------------------------------------
 export const ROLES = {
   PRESIDENTIAL_ADMIN : 'president',
+  ADMIN              : 'admin',
   LOWER_ADMIN        : 'lower_admin',
   TEACHER            : 'teacher',
   STUDENT            : 'member'
@@ -88,7 +89,7 @@ export function authMiddleware(req, res, next) {
 // 2FA Guard — blocks routes until 2FA is verified for admin-tier users
 // ---------------------------------------------------------------------------
 export function require2fa(req, res, next) {
-  const adminRoles = [ROLES.PRESIDENTIAL_ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
+  const adminRoles = [ROLES.PRESIDENTIAL_ADMIN, ROLES.ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
   if (!adminRoles.includes(req.user?.role)) return next();  // students skip 2FA
 
   if (!req.user?.twoFaVerified) {
@@ -117,11 +118,11 @@ export function presidentMiddleware(req, res, next) {
 }
 
 // ---------------------------------------------------------------------------
-// adminMiddleware — Presidential Admin OR Lower Admin
+// adminMiddleware — Presidential Admin, Admin, OR Lower Admin
 // ---------------------------------------------------------------------------
 export function adminMiddleware(req, res, next) {
   authMiddleware(req, res, () => {
-    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.LOWER_ADMIN];
+    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.ADMIN, ROLES.LOWER_ADMIN];
     if (!allowed.includes(req.user?.role)) {
       return res.status(403).json({
         success: false,
@@ -133,11 +134,11 @@ export function adminMiddleware(req, res, next) {
 }
 
 // ---------------------------------------------------------------------------
-// staffMiddleware — President, Lower Admin, or Teacher
+// staffMiddleware — President, Admin, Lower Admin, or Teacher
 // ---------------------------------------------------------------------------
 export function staffMiddleware(req, res, next) {
   authMiddleware(req, res, () => {
-    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
+    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
     if (!allowed.includes(req.user?.role)) {
       return res.status(403).json({
         success: false,
@@ -153,7 +154,7 @@ export function staffMiddleware(req, res, next) {
 // ---------------------------------------------------------------------------
 export function teacherMiddleware(req, res, next) {
   authMiddleware(req, res, () => {
-    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
+    const allowed = [ROLES.PRESIDENTIAL_ADMIN, ROLES.ADMIN, ROLES.LOWER_ADMIN, ROLES.TEACHER];
     if (!allowed.includes(req.user?.role)) {
       return res.status(403).json({
         success: false,

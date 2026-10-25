@@ -162,20 +162,34 @@ export const router = {
       }
     }
     if (window.location.hash) {
-      return window.location.hash.slice(1) || '/';
+      const raw = window.location.hash.slice(1);
+      return raw.startsWith('/') ? raw : `/${raw}`;
+    }
+    if (window.location.pathname && window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+      return window.location.pathname;
     }
     return '/';
   },
   navigate(path) {
-    if (window.location.hash.slice(1) === path) {
-      events.emit('routeChange', path);
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+      try {
+        history.replaceState(null, '', '/' + (normalized ? '#' + normalized : ''));
+      } catch (_) {}
+    }
+    if (window.location.hash.slice(1) === normalized) {
+      events.emit('routeChange', normalized);
     } else {
-      window.location.hash = path;
+      window.location.hash = normalized;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   },
   init() {
     window.addEventListener('hashchange', () => {
+      const path = this.getCurrentPath();
+      events.emit('routeChange', path);
+    });
+    window.addEventListener('popstate', () => {
       const path = this.getCurrentPath();
       events.emit('routeChange', path);
     });

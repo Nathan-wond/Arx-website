@@ -47,7 +47,12 @@ app.use(cors({
       ALLOWED_ORIGINS_API.includes(origin) ||
       origin.endsWith('.vercel.app') ||
       origin.includes('localhost') ||
-      origin.includes('127.0.0.1')
+      origin.includes('127.0.0.1') ||
+      origin.endsWith('.ngrok.io') ||
+      origin.endsWith('.ngrok-free.app') ||
+      origin.endsWith('.ngrok-free.dev') ||
+      origin.endsWith('.ngrok.app') ||
+      origin.endsWith('.ngrok.com')
     ) {
       callback(null, true);
     } else {
@@ -56,22 +61,11 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning', 'X-Requested-With', 'Accept']
 }));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-app.use(async (_req, _res, next) => {
-  try {
-    if (typeof db.ensureInitialized === 'function') {
-      await db.ensureInitialized();
-    }
-  } catch (err) {
-    console.error('[DB Global Middleware Error]', err);
-  }
-  next();
-});
 
 // Hardened Security Headers
 app.use((_req, res, next) => {
@@ -88,12 +82,73 @@ app.use((_req, res, next) => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
       "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://api.telegram.org",
+      "connect-src 'self' https://api.telegram.org https://*.ngrok-free.dev https://*.ngrok-free.app https://*.ngrok.app https://*.ngrok.io https://*.ngrok.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'"
     ].join('; ')
   );
+  next();
+});
+
+// Optional transparent proxy to local laptop backend via ngrok tunnel
+const LAPTOP_BACKEND_URL = (
+  process.env.BACKEND_URL ||
+  process.env.NGROK_URL ||
+  process.env.TUNNEL_URL ||
+  ''
+).trim().replace(/\/+$/, '');
+
+if (LAPTOP_BACKEND_URL) {
+  console.log(`[API Proxy] Forwarding /api requests to laptop backend: ${LAPTOP_BACKEND_URL}`);
+  app.use('/api', async (req, res) => {
+    try {
+      const targetUrl = `${LAPTOP_BACKEND_URL}/api${req.url}`;
+      const forwardHeaders = { ...req.headers };
+      delete forwardHeaders.host;
+      delete forwardHeaders['content-length'];
+      forwardHeaders['ngrok-skip-browser-warning'] = 'true';
+      forwardHeaders['x-forwarded-host'] = req.headers.host || '';
+
+      const fetchOptions = {
+        method: req.method,
+        headers: forwardHeaders,
+        redirect: 'manual'
+      };
+
+      if (!['GET', 'HEAD'].includes(req.method) && req.body) {
+        fetchOptions.body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
+        forwardHeaders['content-type'] = forwardHeaders['content-type'] || 'application/json';
+      }
+
+      const backendRes = await fetch(targetUrl, fetchOptions);
+      res.status(backendRes.status);
+      backendRes.headers.forEach((val, key) => {
+        if (!['content-encoding', 'content-length', 'transfer-encoding'].includes(key.toLowerCase())) {
+          res.setHeader(key, val);
+        }
+      });
+      const buffer = await backendRes.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    } catch (err) {
+      console.error('[API Proxy Error]:', err.message);
+      res.status(502).json({
+        success: false,
+        error: `Could not reach the local ARX database on your laptop via ${LAPTOP_BACKEND_URL}. Ensure your laptop is on, with 'node server.js' and ngrok active.`,
+        details: err.message
+      });
+    }
+  });
+}
+
+app.use(async (_req, _res, next) => {
+  try {
+    if (typeof db.ensureInitialized === 'function') {
+      await db.ensureInitialized();
+    }
+  } catch (err) {
+    console.error('[DB Global Middleware Error]', err);
+  }
   next();
 });
 
@@ -156,7 +211,7 @@ function presidentViewGuard(req, res, next) {
 }
 
 app.get(['/admin-applications.html', '/71354caa6bea2251/applications'], adminViewGuard, (_req, res) => {
-  res.sendFile(path.resolve(__dirname, '../private_views', 'admin-applications.html'));
+  res.redirect('/71354caa6bea2251/dashboard');
 });
 
 app.use('/api', apiRouter);

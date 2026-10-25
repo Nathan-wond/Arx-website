@@ -24,16 +24,19 @@ export function clearStoredToken() {
   }
 }
 
-const API_BASE = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL)
-  ? import.meta.env.VITE_API_URL.replace(/\/$/, '')
-  : '';
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
 
 async function request(endpoint, options = {}) {
   const token = getStoredToken();
   const headers = {
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
     ...options.headers
   };
+
+  if (options.body instanceof FormData) {
+    delete headers['Content-Type'];
+  }
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -345,11 +348,19 @@ export const api = {
     });
   },
 
+  async approveApplication(id) {
+    return this.approveAdminApplication(id);
+  },
+
   async rejectAdminApplication(id, reason = 'Application rejected by admin.') {
     return request(`/api/admin/applications/${encodeURIComponent(id)}/reject`, {
       method: 'POST',
       body: JSON.stringify({ reason, rejectionReason: reason })
     });
+  },
+
+  async rejectApplication(id, reason) {
+    return this.rejectAdminApplication(id, reason);
   },
 
   async deleteAdminApplication(id) {
