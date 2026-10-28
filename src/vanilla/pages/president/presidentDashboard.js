@@ -595,6 +595,18 @@ function renderMembersTab() {
                   </td>
                   <td class="p-3.5 text-right space-x-1.5">
                     <button
+                      data-action="toggle-member-status"
+                      data-member-id="${member.id}"
+                      data-member-name="${escapeHtml(member.studentName)}"
+                      data-member-status="${member.status}"
+                      class="px-2.5 py-1 rounded-md text-[11px] font-bold ${
+                        member.status === 'suspended'
+                          ? 'text-emerald-700 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
+                          : 'text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-800 hover:bg-amber-50 dark:hover:bg-amber-950/40'
+                      } cursor-pointer border bg-transparent">
+                      ${member.status === 'suspended' ? 'Activate / Unsuspend' : 'Suspend Member'}
+                    </button>
+                    <button
                       data-action="perm-delete-member"
                       data-member-id="${member.id}"
                       data-member-name="${escapeHtml(member.studentName)}"
@@ -2416,6 +2428,28 @@ function attachEvents() {
           loadPresidentData();
         } catch (err) {
           showFeedback('error', err.message || 'Failed to revoke administrator.');
+        }
+      }
+    };
+  });
+
+  // Toggle Member Status (Suspend / Activate)
+  document.querySelectorAll('[data-action="toggle-member-status"]').forEach(btn => {
+    btn.onclick = async () => {
+      const id = btn.getAttribute('data-member-id');
+      const name = btn.getAttribute('data-member-name');
+      const curStatus = btn.getAttribute('data-member-status');
+      const isSuspended = curStatus === 'suspended';
+      const actionLabel = isSuspended ? 'reactivate' : 'suspend';
+      if (confirm(`Are you sure you want to ${actionLabel} membership for "${name}"?`)) {
+        btn.disabled = true;
+        try {
+          await api.toggleAdminMemberStatus(id);
+          showFeedback('success', `Membership for "${name}" updated.`);
+          await loadPresidentData();
+        } catch (err) {
+          btn.disabled = false;
+          showFeedback('error', err.message || `Failed to ${actionLabel} member.`);
         }
       }
     };

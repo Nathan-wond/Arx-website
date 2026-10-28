@@ -65,11 +65,7 @@ let errorMessage = null;
 let awardFileUploadError = null;
 let isRegistrationClosed = false;
 let registrationResult = null;
-let activatedSuccessData = null;
 let copiedMemberId = false;
-let activationCodeInput = '';
-let activatingAccount = false;
-let activationError = null;
 
 // Synchronize all current DOM inputs into formState so no values are ever lost
 function syncDOMToFormState() {
@@ -209,32 +205,6 @@ async function compressAndProcessFile(file) {
 }
 
 function getRegisterPageHTML() {
-  if (activatedSuccessData) {
-    return `
-      <div class="max-w-xl mx-auto px-4 py-16">
-        <div class="p-8 sm:p-10 text-center space-y-6 border border-[#282828]/10 dark:border-[#25473C] bg-white dark:bg-[#102B22] rounded-2xl shadow-sm">
-          <div class="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-[#15362B] text-emerald-600 dark:text-[#58B889] border border-emerald-300 dark:border-[#25473C] flex items-center justify-center mx-auto">
-            ${icon('CheckCircle2', 'w-9 h-9')}
-          </div>
-          <div class="space-y-3">
-            <span class="text-xs font-mono font-bold tracking-widest text-emerald-600 dark:text-[#58B889] uppercase">STATUS · ACTIVE</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1a1a1a] dark:text-[#F1F7F4] tracking-tight">Account Activated!</h2>
-            <p class="text-sm sm:text-base text-[#282828]/80 dark:text-[#D1E0DA] leading-relaxed">
-              Welcome to <strong>ARX IT CLUB</strong>, <strong>${activatedSuccessData.studentName}</strong>. Your membership account (<code>${activatedSuccessData.memberId}</code>) is fully active and verified.
-            </p>
-          </div>
-          <div class="pt-3">
-            <button
-              data-nav="/login"
-              class="w-full font-mono text-sm uppercase tracking-wider font-bold py-3.5 px-6 rounded-lg bg-[#FC6454] text-white hover:bg-[#E04D3E] dark:bg-[#2F8068] dark:hover:bg-[#3A9277] transition-all cursor-pointer border-0 shadow-sm">
-              Sign In to Member Portal &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
   if (isRegistrationClosed) {
     return `
       <div class="max-w-xl mx-auto px-4 py-16">
@@ -273,118 +243,92 @@ function getRegisterPageHTML() {
     return `
       <div class="max-w-2xl mx-auto px-4 py-16">
         <div class="p-8 sm:p-10 text-center space-y-6 border border-[#282828]/10 dark:border-[#25473C] bg-white dark:bg-[#102B22] rounded-2xl shadow-sm">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-[#15362B] text-emerald-600 dark:text-[#58B889] border border-emerald-300 dark:border-[#25473C] flex items-center justify-center mx-auto">
-            ${icon('CheckCircle2', 'w-8 h-8')}
+          <div class="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-[#15362B] text-emerald-600 dark:text-[#58B889] border border-emerald-300 dark:border-[#25473C] flex items-center justify-center mx-auto shadow-sm">
+            ${icon('CheckCircle2', 'w-9 h-9')}
           </div>
+          
           <div class="space-y-2">
-            <span class="text-xs font-mono font-bold tracking-widest text-emerald-600 dark:text-[#58B889] uppercase">SYS.REGISTER · SUBMITTED</span>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1a1a1a] dark:text-[#F1F7F4] tracking-tight">Registration Successful</h2>
-            <p class="text-sm sm:text-base text-[#282828]/80 dark:text-[#D1E0DA] leading-relaxed">
-              Welcome to <strong>ARX IT CLUB</strong>, <strong>${registrationResult.studentName}</strong>. Your membership profile has been recorded.
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider text-emerald-700 dark:text-[#58B889] bg-emerald-100/70 dark:bg-[#15362B]/80 uppercase">
+              ${icon('Check', 'w-3.5 h-3.5')} Application Recorded
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1a1a1a] dark:text-[#F1F7F4] tracking-tight">
+              Registration Successful
+            </h2>
+            <p class="text-sm sm:text-base text-[#282828]/80 dark:text-[#D1E0DA] leading-relaxed max-w-lg mx-auto">
+              Welcome to <strong>ARX IT CLUB</strong>, <strong>${registrationResult.studentName}</strong>. Your membership application has been successfully submitted!
             </p>
           </div>
 
-          <!-- Member ID Box -->
-          <div class="bg-[#FAF4EE] dark:bg-[#0C241C] text-[#282828] dark:text-[#F1F7F4] rounded-xl p-6 space-y-3 border border-[#282828]/10 dark:border-[#25473C] transition-colors">
-            <p class="text-xs sm:text-sm uppercase tracking-wider text-[#FC6454] dark:text-[#6BB89E] font-mono font-bold">
-              Assigned Member Identifier
-            </p>
+          <!-- Status Indicator: Waiting for Admin Approval -->
+          <div class="p-4 rounded-xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 flex items-center justify-center gap-2.5 text-center">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+            <span class="text-sm sm:text-base font-bold text-amber-800 dark:text-amber-300">
+              Waiting for Admin Approval
+            </span>
+          </div>
+
+          <!-- Member ID / Login ID Box -->
+          <div class="bg-[#FAF4EE] dark:bg-[#0C241C] text-[#282828] dark:text-[#F1F7F4] rounded-xl p-6 sm:p-7 space-y-4 border border-[#282828]/10 dark:border-[#25473C] transition-colors shadow-xs">
+            <div class="space-y-1">
+              <p class="text-xs sm:text-sm uppercase tracking-wider text-[#FC6454] dark:text-[#6BB89E] font-mono font-bold">
+                Your Official Login ID (Member ID)
+              </p>
+              <p class="text-xs text-[#282828]/60 dark:text-[#B7C9C2]">
+                Please write down or copy this ID. You will use it to log in once your account is approved.
+              </p>
+            </div>
+
             <div class="flex items-center justify-center gap-3">
-              <span class="font-mono text-3xl sm:text-4xl font-black text-[#FC6454] dark:text-[#6BB89E] tracking-widest">
+              <span class="font-mono text-3xl sm:text-4xl font-black text-[#FC6454] dark:text-[#6BB89E] tracking-widest selection:bg-[#FC6454]/20">
                 ${registrationResult.memberId}
               </span>
               <button
                 id="reg-copy-member-id"
-                class="p-2.5 rounded-lg bg-white dark:bg-[#15362B] hover:bg-[#FC6454]/10 border border-[#282828]/15 dark:border-[#25473C] text-[#282828] dark:text-[#F1F7F4] transition-colors cursor-pointer"
-                title="Copy Member ID">
+                class="p-2.5 rounded-lg bg-white dark:bg-[#15362B] hover:bg-[#FC6454]/10 border border-[#282828]/15 dark:border-[#25473C] text-[#282828] dark:text-[#F1F7F4] transition-colors cursor-pointer shadow-xs"
+                title="Copy Login ID">
                 ${copiedMemberId ? icon('Check', 'w-5 h-5 text-emerald-500') : icon('Copy', 'w-5 h-5')}
               </button>
             </div>
             ${copiedMemberId ? `<p class="text-xs sm:text-sm font-mono font-semibold text-emerald-600 dark:text-[#58B889]">Copied to clipboard!</p>` : ''}
-
-            <div class="pt-2 text-center space-y-1">
-              <div>
-                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-mono font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60">
-                  <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                  Status: Pending Administrator Review
-                </span>
-              </div>
-              <p class="text-xs sm:text-sm font-normal text-[#282828]/70 dark:text-[#B7C9C2] pt-1 max-w-md mx-auto">
-                Your application has been submitted and is currently under review by club administration. You will be notified via Telegram upon approval.
-              </p>
-            </div>
           </div>
 
-          <!-- Telegram Activation Step -->
-          <div class="bg-[#FAF4EE]/70 dark:bg-[#0A211A] border border-[#282828]/10 dark:border-[#25473C] rounded-xl p-6 text-left space-y-4">
-            <div class="flex items-center gap-2.5">
-              ${icon('Send', 'w-5 h-5 text-[#FC6454] dark:text-[#6BB89E]')}
-              <h3 class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-[#282828] dark:text-[#F1F7F4]">Official Telegram Integration</h3>
-            </div>
-            <p class="text-xs sm:text-sm text-[#282828]/80 dark:text-[#D1E0DA] leading-relaxed">
-              Complete these steps to link your student profile with the official <strong>ARX IT CLUB Bot</strong> and join the announcements channel:
-            </p>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-              <div class="p-4 bg-white dark:bg-[#102B22] border border-[#282828]/10 dark:border-[#25473C] rounded-xl space-y-3 flex flex-col justify-between">
-                <div>
-                  <span class="text-xs font-mono font-bold text-[#FC6454] dark:text-[#6BB89E] uppercase">STEP 1 &middot; ACCOUNT LINK</span>
-                  <p class="text-sm font-bold text-[#1a1a1a] dark:text-[#F1F7F4] mt-1">Activate via Bot (@ARXITCLUB_bot)</p>
-                  <p class="text-xs text-[#282828]/70 dark:text-[#B7C9C2] mt-1 leading-normal">Authenticates your student ID and connects your Telegram profile.</p>
-                </div>
-                <a
-                  href="${registrationResult.activationUrl || 'https://t.me/ARXITCLUB_bot'}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs sm:text-sm font-bold rounded-lg bg-[#FC6454] text-white dark:bg-[#2F8068] hover:opacity-90 transition-opacity">
-                  <span>Open Bot in Telegram</span>
-                  ${icon('ExternalLink', 'w-4 h-4')}
-                </a>
-              </div>
-
-              <div class="p-4 bg-white dark:bg-[#102B22] border border-[#282828]/10 dark:border-[#25473C] rounded-xl space-y-3 flex flex-col justify-between">
-                <div>
-                  <span class="text-xs font-mono font-bold text-[#FC6454] dark:text-[#6BB89E] uppercase">STEP 2 &middot; ANNOUNCEMENTS</span>
-                  <p class="text-sm font-bold text-[#1a1a1a] dark:text-[#F1F7F4] mt-1">Join Official Channel</p>
-                  <p class="text-xs text-[#282828]/70 dark:text-[#B7C9C2] mt-1 leading-normal">Receive curriculum schedules and club broadcasts.</p>
-                </div>
-                <a
-                  href="${registrationResult.telegramChannelUrl || 'https://t.me/arxitclub'}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3.5 text-xs sm:text-sm font-semibold rounded-lg border border-[#282828]/20 dark:border-[#25473C] text-[#282828] dark:text-[#F1F7F4] hover:bg-[#282828]/5 dark:hover:bg-[#15362B] transition-colors">
-                  <span>Join @arxitclub</span>
-                  ${icon('ExternalLink', 'w-4 h-4 text-[#282828]/40 dark:text-[#B7C9C2]/60')}
-                </a>
-              </div>
-            </div>
-
-            <!-- Verification Code Input -->
-            <div class="pt-3 border-t border-[#282828]/10 dark:border-[#25473C] space-y-3">
-              <span class="block text-xs sm:text-sm font-bold text-[#1a1a1a] dark:text-[#F1F7F4]">Complete Activation with Code:</span>
-              <form id="reg-activate-subform" class="flex gap-2">
-                <input
-                  id="reg-act-code-input"
-                  type="text"
-                  placeholder="Enter activation code from bot"
-                  value="${activationCodeInput}"
-                  class="flex-1 px-3.5 py-2.5 text-sm font-mono rounded-lg border border-[#282828]/20 dark:border-[#294B40] bg-white dark:bg-[#0C241C] text-[#282828] dark:text-[#F1F7F4] focus:outline-none focus:ring-2 focus:ring-[#FC6454]/30 uppercase" />
-                <button
-                  type="submit"
-                  class="px-5 py-2.5 text-sm font-bold rounded-lg bg-[#FC6454] text-white dark:bg-[#2F8068] cursor-pointer border-0">
-                  ${activatingAccount ? 'Verifying...' : 'Activate'}
-                </button>
-              </form>
-              ${activationError ? `<p class="text-xs sm:text-sm font-medium text-rose-600 dark:text-rose-400">${activationError}</p>` : ''}
-            </div>
+          <!-- What Happens Next Guide -->
+          <div class="p-5 rounded-xl bg-slate-50 dark:bg-[#0A211A] border border-[#282828]/10 dark:border-[#25473C] text-left space-y-3">
+            <h3 class="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-[#282828] dark:text-[#F1F7F4] flex items-center gap-2">
+              ${icon('Info', 'w-4 h-4 text-sky-500')} What Happens Next?
+            </h3>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-[#282828]/80 dark:text-[#D1E0DA]">
+              <li class="flex items-start gap-2.5">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 mt-0.5">1</span>
+                <span><strong>Admin Review:</strong> Club administrators will evaluate your application and course track selections.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 mt-0.5">2</span>
+                <span><strong>Automated Notification:</strong> Once your application is reviewed, you will receive an automated message via email ${registrationResult.email ? `to <strong>${registrationResult.email}</strong>` : ''} and/or Telegram informing you whether your application is <strong>approved</strong>, <strong>denied</strong>, or <strong>suspended</strong>.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold text-xs shrink-0 mt-0.5">3</span>
+                <span><strong>Sign In After Approval:</strong> Once approved, you can immediately access the student portal with your Login ID (<code class="font-mono text-[#FC6454] dark:text-[#6BB89E] font-bold">${registrationResult.memberId}</code>) and the password you created.</span>
+              </li>
+            </ul>
           </div>
 
-          <div class="pt-2">
+          <!-- Action Buttons -->
+          <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
             <button
               data-nav="/login"
-              class="w-full inline-flex items-center justify-center px-4 py-3 text-sm font-bold border border-[#282828]/20 dark:border-[#25473C] rounded-lg text-[#282828] dark:text-[#F1F7F4] hover:bg-[#282828]/5 dark:hover:bg-[#15362B] transition-colors cursor-pointer">
-              Go to Sign In &rarr;
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold rounded-lg bg-[#FC6454] text-white hover:bg-[#E04D3E] dark:bg-[#2F8068] dark:hover:bg-[#3A9277] transition-all cursor-pointer border-0 shadow-sm">
+              <span>Go to Sign In</span>
+              ${icon('ArrowRight', 'w-4 h-4')}
             </button>
+            <a
+              href="${registrationResult.telegramChannelUrl || 'https://t.me/arxitclub'}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold rounded-lg border border-[#282828]/20 dark:border-[#25473C] text-[#282828] dark:text-[#F1F7F4] hover:bg-[#282828]/5 dark:hover:bg-[#15362B] transition-colors">
+              <span>Join Announcements (@arxitclub)</span>
+              ${icon('ExternalLink', 'w-4 h-4 text-[#282828]/40 dark:text-[#B7C9C2]/60')}
+            </a>
           </div>
         </div>
       </div>
@@ -725,48 +669,20 @@ function attachRegisterPageEvents() {
   const root = document.getElementById('register-page-root');
   if (!root) return;
 
-  // 1. Success screen copy button
-  const copyBtn = document.getElementById('reg-copy-member-id');
-  if (copyBtn && registrationResult) {
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(registrationResult.memberId);
-      copiedMemberId = true;
-      renderRegisterPageDOM();
-      setTimeout(() => {
-        copiedMemberId = false;
+  // 1. Success screen handler (only copy button needed)
+  if (registrationResult) {
+    const copyBtn = document.getElementById('reg-copy-member-id');
+    if (copyBtn) {
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(registrationResult.memberId);
+        copiedMemberId = true;
         renderRegisterPageDOM();
-      }, 2000);
-    };
-  }
-
-  // 2. Success screen activation form
-  const actForm = document.getElementById('reg-activate-subform');
-  if (actForm && registrationResult) {
-    actForm.onsubmit = async (e) => {
-      e.preventDefault();
-      const codeInp = document.getElementById('reg-act-code-input');
-      if (codeInp) activationCodeInput = codeInp.value.trim();
-      if (!activationCodeInput) return;
-      activatingAccount = true;
-      activationError = null;
-      renderRegisterPageDOM();
-      try {
-        const res = await api.activateAccount(activationCodeInput, registrationResult.memberId);
-        if (res?.success || res?.alreadyActive) {
-          activatedSuccessData = {
-            memberId: registrationResult.memberId,
-            studentName: registrationResult.studentName
-          };
-        } else {
-          activationError = res?.message || 'Activation failed.';
-        }
-      } catch (err) {
-        activationError = err.message || 'Activation failed.';
-      } finally {
-        activatingAccount = false;
-        renderRegisterPageDOM();
-      }
-    };
+        setTimeout(() => {
+          copiedMemberId = false;
+          renderRegisterPageDOM();
+        }, 2000);
+      };
+    }
     return;
   }
 
@@ -1178,12 +1094,10 @@ function attachRegisterPageEvents() {
           registrationResult = {
             memberId: res.memberId,
             studentName: fullName,
+            email: formState.email,
             enrolledCourse: res.course,
             telegramChannelUrl: res.telegramChannelUrl || 'https://t.me/arxitclub',
-            telegramBotUrl: res.telegramBotUrl || 'https://t.me/ARXITCLUB_bot',
-            activationUrl: res.activationUrl,
-            activationToken: res.activationToken,
-            activationCode: res.activationCode
+            telegramBotUrl: res.telegramBotUrl || 'https://t.me/ARXITCLUB_bot'
           };
           if (typeof window.confetti === 'function') {
             window.confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });

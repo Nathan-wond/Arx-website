@@ -52,7 +52,7 @@ async function startServer() {
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
         "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
         "img-src 'self' data: blob: https:",
-        "connect-src 'self' https://api.telegram.org https://*.ngrok-free.dev https://*.ngrok-free.app https://*.ngrok.app https://*.ngrok.io https://*.ngrok.com",
+        "connect-src 'self' https://api.telegram.org",
         "frame-ancestors 'none'",
         "base-uri 'self'",
         "form-action 'self'"
@@ -239,7 +239,22 @@ async function startServer() {
     console.log(`📢 Preserved Official Channel: ${CONFIG.TELEGRAM_CHANNEL_HANDLE}`);
     console.log(`🔒 Telegram Bot API Token: ${CONFIG.TELEGRAM_BOT_TOKEN ? '[CONFIGURED]' : '[NOT CONFIGURED in environment]'}`);
     console.log(`🌐 Deployed Base URL: ${CONFIG.APP_URL || 'Not specified'}`);
-    console.log(`🍃 MongoDB: ${process.env.MONGODB_URI ? '[CONFIGURED]' : '[Not set — using local JSON file]'}`);
+
+    // Database persistence mode
+    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL || '';
+    if (mongoUri && (mongoUri.startsWith('mongodb://') || mongoUri.startsWith('mongodb+srv://'))) {
+      const isLocal = mongoUri.includes('localhost') || mongoUri.includes('127.0.0.1');
+      if (isLocal) {
+        console.log(`🍃 Database: MongoDB (LOCAL - not suitable for production)`);
+      } else {
+        console.log(`🍃 Database: MongoDB Atlas (CLOUD - production ready)`);
+      }
+    } else if (isProduction) {
+      console.error(`❌ CRITICAL: Production requires MongoDB Atlas but MONGODB_URI not configured!`);
+      console.error(`   Set MONGODB_URI environment variable with MongoDB Atlas connection string.`);
+    } else {
+      console.log(`🍃 Database: Local JSON file (development fallback - data will not persist in production)`);
+    }
 
     // Auto-start ngrok tunnel in development
     if (!isProduction) {

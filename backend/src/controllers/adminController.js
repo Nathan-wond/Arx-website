@@ -11,6 +11,10 @@ import {
   configureTelegramBotToken,
   testFullTelegramConnection,
   syncTelegramBotCommands } from './telegramController.js';
+import {
+  notifyApplicationApproved,
+  notifyApplicationRejected,
+  notifyMemberSuspended } from '../services/notificationService.js';
 
 function validateUrl(urlStr, fieldName, options = { requireHttps: true, allowRelative: false }) {
   if (!urlStr || typeof urlStr !== 'string') return '';
@@ -199,21 +203,10 @@ export const adminController = {
         console.warn('[Admin] approveApplication save warning:', saveErr?.message);
       }
 
-      // Proactively notify student on Telegram if linked
-      if (approved.telegramUserId) {
-        try {
-          const appUrl = (db.getSettings()?.websiteUrl || CONFIG.APP_URL || 'https://arx-website-sjs.vercel.app').replace(/\/+$/, '');
-          sendTelegramMessage(
-            approved.telegramUserId,
-            `🎉 *Congratulations, ${approved.studentName}!*\n\n` +
-            `Your student application for *ARX IT CLUB OF SJS* has been **APPROVED**!\n\n` +
-            `• *Member ID:* \`${approved.memberId}\`\n` +
-            `• *Class:* ${approved.class}\n\n` +
-            `You can now access your course tracks and the member portal.\n\n` +
-            `🌐 [Log in to Student Portal](${appUrl}/#login)`
-          ).catch(() => {});
-        } catch { /* ignore notification failure */ }
-      }
+      // Proactively notify student on Telegram and Email
+      notifyApplicationApproved(approved).catch(err => {
+        console.warn('[Admin] Failed to send approval notification:', err?.message);
+      });
 
       res.json({
         success: true,
@@ -241,7 +234,8 @@ export const adminController = {
       await db.ensureInitialized();
       const { id } = req.params;
       const { rejectionReason, reason } = req.body || {};
-      const rejected = db.rejectApplication(id, rejectionReason || reason, req.user);
+      const finalReason = rejectionReason || reason || '';
+      const rejected = db.rejectApplication(id, finalReason, req.user);
       if (!rejected) {
         res.status(404).json({ error: 'Application not found.' });
         return;
@@ -254,19 +248,10 @@ export const adminController = {
         console.warn('[Admin] rejectApplication save warning:', saveErr?.message);
       }
 
-      // Notify student on Telegram if linked
-      if (rejected.telegramUserId) {
-        try {
-          sendTelegramMessage(
-            rejected.telegramUserId,
-            `ℹ️ *Application Status Update*\n\n` +
-            `Dear ${rejected.studentName}, your membership application for ARX IT CLUB OF SJS was evaluated.\n\n` +
-            `Status: *Application Declined*\n` +
-            (rejected.rejectionReason ? `Reason: _${rejected.rejectionReason}_\n\n` : '\n') +
-            `If you have questions, please reach out to club coordinators.`
-          ).catch(() => {});
-        } catch { /* ignore notification failure */ }
-      }
+      // Proactively notify student on Telegram and Email
+      notifyApplicationRejected(rejected, finalReason).catch(err => {
+        console.warn('[Admin] Failed to send rejection notification:', err?.message);
+      });
 
       res.json({
         success: true,
@@ -479,7 +464,7 @@ export const adminController = {
     res.status(404).json({ error: 'Award file content not found.' });
   },
 
-  updateMember(req, res) {
+  async updateMember(req, res) {
     const { id } = req.params;
     const targetMember = db.findMemberById(id) || db.findMemberByMemberId(id);
     if (!targetMember) {
@@ -492,6 +477,7 @@ export const adminController = {
       return;
     }
 
+    const previousStatus = targetMember.status;
     const { studentName, class: studentClass, phoneNumber, email, telegramUsername, award, status } = req.body;
 
     const updated = db.updateMemberProfile(id, {
@@ -509,10 +495,25 @@ export const adminController = {
       return;
     }
 
+    try {
+      await db._saveToFile();
+    } catch (saveErr) {
+      console.warn('[Admin] updateMember save warning:', saveErr?.message);
+    }
+
+    // Trigger automated notification if status changed
+    if (updated.status === 'suspended' && previousStatus !== 'suspended') {
+      notifyMemberSuspended(updated, 'Account status updated to suspended by administrator').catch(() => {});
+    } else if ((updated.status === 'approved' || updated.status === 'active') && previousStatus !== 'approved' && previousStatus !== 'active') {
+      notifyApplicationApproved(updated).catch(() => {});
+    } else if (updated.status === 'rejected' && previousStatus !== 'rejected') {
+      notifyApplicationRejected(updated, 'Application status updated to rejected by administrator').catch(() => {});
+    }
+
     res.json({ success: true, message: 'Member profile updated successfully.', member: updated });
   },
 
-  toggleMemberStatus(req, res) {
+  async toggleMemberStatus(req, res) {
     const { id } = req.params;
     const targetMember = db.findMemberById(id) || db.findMemberByMemberId(id);
     if (!targetMember) {
@@ -529,11 +530,26 @@ export const adminController = {
       return;
     }
 
+    const previousStatus = targetMember.status;
     const member = db.toggleMemberStatus(id);
     if (!member) {
       res.status(404).json({ error: 'Member not found or protected.' });
       return;
     }
+
+    try {
+      await db._saveToFile();
+    } catch (saveErr) {
+      console.warn('[Admin] toggleMemberStatus save warning:', saveErr?.message);
+    }
+
+    // Dispatch automated notification based on new status
+    if (member.status === 'suspended' && previousStatus !== 'suspended') {
+      notifyMemberSuspended(member, 'Membership account status changed to suspended by administrator').catch(() => {});
+    } else if ((member.status === 'approved' || member.status === 'active') && previousStatus !== 'approved' && previousStatus !== 'active') {
+      notifyApplicationApproved(member).catch(() => {});
+    }
+
     res.json({ success: true, message: `Account status updated to ${member.status}.`, member });
   },
 

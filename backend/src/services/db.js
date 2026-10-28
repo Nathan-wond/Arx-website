@@ -449,18 +449,22 @@ class DatabaseStore {
         this.isFileHydrated = true;
         this.lastFileSync = Date.now();
         if (needsSave) {
-          this._saveToFile();
+          await this._saveToFile();
         }
-        console.log('[FileDB] Loaded from arx_database.json:', {
+        console.log('[DB] State loaded successfully:', {
           members: this.members.size,
           awardFiles: this.memberAwardFiles.size,
           enrollments: this.enrollments.size,
+          courses: this.courses.size,
           activationSessions: this.activationSessions.size,
           attendanceSessions: this.attendanceSessions.size,
           attendanceRecords: this.attendanceRecords.size
         });
       } catch (err) {
-        console.warn('[FileDB] Hydration error:', err?.message || err);
+        console.error('[DB] State hydration error:', err?.message || err);
+        if (process.env.NODE_ENV === 'production') {
+          throw err; // Fatal in production
+        }
       } finally {
         this.initPromise = null;
       }
@@ -470,7 +474,7 @@ class DatabaseStore {
   }
 
   
-  _saveToFile() {
+  async _saveToFile() {
     try {
       this.lastFileSync = Date.now();
       const snapshot = {
@@ -504,14 +508,22 @@ class DatabaseStore {
         botCommands: Array.from(this.botCommands?.values() || []),
         auditLogs: Array.isArray(this.auditLogs) ? this.auditLogs : []
       };
-      // BUG FIX: return the Promise from writeDb() so callers can properly await it
-      return Promise.resolve(writeDb(snapshot)).catch(err => {
-        console.error('[FileDB] _saveToFile writeDb error:', err?.message || err);
-        return false;
-      });
+
+      // Await the write operation to ensure data is persisted
+      const success = await writeDb(snapshot);
+      if (!success) {
+        console.error('[DB] ❌ Persistence failed - data may not be saved!');
+        if (process.env.NODE_ENV === 'production') {
+          throw new Error('Critical: Database write failed in production');
+        }
+      }
+      return success;
     } catch (err) {
-      console.error('[FileDB] _saveToFile error:', err?.message || err);
-      return Promise.resolve(false);
+      console.error('[DB] ❌ Save error:', err?.message || err);
+      if (process.env.NODE_ENV === 'production') {
+        throw err; // Fatal in production
+      }
+      return false;
     }
   }
 

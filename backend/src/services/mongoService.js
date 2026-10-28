@@ -64,24 +64,50 @@ function getModel() {
 
 // ── Connection ────────────────────────────────────────────────────────────────
 async function ensureConnected() {
+  // Reuse existing connection if already established
   if (_connected || mongoose.connection.readyState === 1) {
     _connected = true;
     return true;
   }
-  if (!isMongoConfigured) return false;
+
+  if (!isMongoConfigured) {
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (isProduction) {
+      console.error('[MongoDB] ❌ CRITICAL: Production environment requires MongoDB Atlas. Set MONGODB_URI in environment variables.');
+      throw new Error('MongoDB connection required in production but MONGODB_URI not configured');
+    }
+    return false;
+  }
 
   try {
+    // Serverless-optimized connection settings
     await mongoose.connect(MONGO_URI, {
       serverSelectionTimeoutMS: 8000,
       socketTimeoutMS:          30000,
       maxPoolSize:              10,
+      minPoolSize:              2,
+      maxIdleTimeMS:            10000,
+      retryWrites:              true,
+      retryReads:               true,
+      w:                        'majority'
     });
     _connected = true;
-    console.log('[MongoDB] ✅ Connected successfully to MongoDB Atlas.');
+
+    // Extract database name from URI for logging (without credentials)
+    const dbMatch = MONGO_URI.match(/\/([^/?]+)(\?|$)/);
+    const dbName = dbMatch ? dbMatch[1] : 'unknown';
+    console.log(`[MongoDB] ✅ Connected successfully to database: ${dbName}`);
+
     return true;
   } catch (err) {
-    console.warn('[MongoDB] ⚠️  Connection failed:', err?.message || err);
+    console.error('[MongoDB] ❌ Connection failed:', err?.message || err);
     _connected = false;
+
+    const isProduction = process.env.NODE_ENV === 'production';
+    if (isProduction) {
+      // In production, MongoDB failure is fatal
+      throw new Error(`Production MongoDB connection failed: ${err?.message}`);
+    }
     return false;
   }
 }
@@ -140,7 +166,7 @@ export function readDb() {
  * Called by db.js ensureInitialized().
  */
 export async function readDbAsync() {
-  const local = localRead();
+  const isProduction = process.env.NODE_ENV === 'production';
 
   if (isMongoConfigured) {
     const ok = await ensureConnected();
@@ -148,37 +174,52 @@ export async function readDbAsync() {
       try {
         const Model  = getModel();
         const doc    = await Model.findOne({ key: 'global' }).lean().exec();
-        if (doc && doc.payload && doc.payload.members && doc.payload.members.length > 0) {
-          const data = doc.payload;
-          // Merge with local: keep local as base, overlay MongoDB data, and merge members by ID
-          const localMembers = Array.isArray(local?.members) ? local.members : [];
-          const remoteMembers = Array.isArray(data?.members) ? data.members : [];
-          const memberMap = new Map();
-          for (const m of remoteMembers) if (m && m.id) memberMap.set(m.id, m);
-          for (const m of localMembers) if (m && m.id) memberMap.set(m.id, m);
-          const mergedMembers = Array.from(memberMap.values());
 
-          const merged = { ...local, ...data, members: mergedMembers };
-          _cache = merged;
-          localWrite(merged);
-          console.log('[MongoDB] ✅ State loaded from MongoDB. Members:', mergedMembers.length);
-          return merged;
-        } else if (local) {
-          // MongoDB is empty – seed it from local JSON
-          console.log('[MongoDB] ℹ️  Database is empty. Seeding initial state from local file...');
-          await _writeMongo(local);
-          _cache = local;
-          return local;
+        if (doc && doc.payload) {
+          const data = doc.payload;
+          _cache = data;
+
+          // Also write to local file for development convenience (but MongoDB is authoritative)
+          if (!isProduction) {
+            localWrite(data);
+          }
+
+          const memberCount = Array.isArray(data.members) ? data.members.length : 0;
+          console.log(`[MongoDB] ✅ State loaded from MongoDB. Members: ${memberCount}, Settings: ${data.settings ? 'present' : 'missing'}`);
+          return data;
+        } else {
+          // MongoDB document exists but payload is empty - initialize from local if available
+          const local = localRead();
+          if (local) {
+            console.log('[MongoDB] ℹ️  Empty MongoDB document found. Initializing from local state...');
+            await _writeMongo(local);
+            _cache = local;
+            return local;
+          }
+
+          // No local state either - return null to trigger default initialization
+          console.log('[MongoDB] ℹ️  MongoDB and local state both empty. Will initialize with defaults.');
+          return null;
         }
       } catch (err) {
-        console.warn('[MongoDB] ⚠️  Read error (falling back to local):', err?.message || err);
+        console.error('[MongoDB] ❌ Read error:', err?.message || err);
+        if (isProduction) {
+          throw new Error(`Production MongoDB read failed: ${err?.message}`);
+        }
+        // Development: fall through to local file fallback
       }
+    } else if (isProduction) {
+      throw new Error('Production requires MongoDB but connection failed');
     }
+  } else if (isProduction) {
+    throw new Error('Production requires MongoDB but MONGODB_URI not configured');
   }
 
-  // Fallback: local file only
+  // Development fallback: local file only
+  const local = localRead();
   if (local) {
     _cache = local;
+    console.log('[MongoDB] ⚠️  Using local file storage (development only)');
     return local;
   }
 
@@ -192,9 +233,10 @@ async function _writeMongo(data) {
   if (!isMongoConfigured) return false;
   const ok = await ensureConnected();
   if (!ok) return false;
+
   try {
     const Model = getModel();
-    await Model.findOneAndUpdate(
+    const result = await Model.findOneAndUpdate(
       { key: 'global' },
       {
         $set: {
@@ -205,9 +247,15 @@ async function _writeMongo(data) {
       },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
     ).exec();
-    return true;
+
+    if (result) {
+      const memberCount = Array.isArray(data.members) ? data.members.length : 0;
+      console.log(`[MongoDB] ✅ Write successful. Members: ${memberCount}, Timestamp: ${new Date().toISOString()}`);
+      return true;
+    }
+    return false;
   } catch (err) {
-    console.warn('[MongoDB] ⚠️  Write error:', err?.message || err);
+    console.error('[MongoDB] ❌ Write error:', err?.message || err);
     return false;
   }
 }
@@ -219,19 +267,37 @@ async function _writeMongo(data) {
 export async function writeDb(data) {
   if (!data) return false;
 
-  // Always write locally first (fast, synchronous cache)
-  _cache = data;
-  localWrite(data);
+  const isProduction = process.env.NODE_ENV === 'production';
 
-  // Then asynchronously persist to MongoDB
+  // Update in-memory cache immediately
+  _cache = data;
+
+  // MongoDB write is REQUIRED in production, optional in development
   if (isMongoConfigured) {
     const ok = await _writeMongo(data);
-    if (ok) return true;
-    // MongoDB write failed – local file is our fallback
-    console.warn('[MongoDB] ⚠️  Failed to sync to MongoDB. Data is saved locally.');
+    if (ok) {
+      // Success - also write to local file in development for convenience
+      if (!isProduction) {
+        localWrite(data);
+      }
+      return true;
+    } else {
+      // MongoDB write failed
+      if (isProduction) {
+        console.error('[MongoDB] ❌ CRITICAL: Production write failed. Data not persisted.');
+        throw new Error('Production MongoDB write failed - data persistence failure');
+      }
+      console.warn('[MongoDB] ⚠️  MongoDB write failed. Falling back to local file (development only).');
+    }
+  } else if (isProduction) {
+    console.error('[MongoDB] ❌ CRITICAL: Production requires MongoDB but MONGODB_URI not configured.');
+    throw new Error('Production requires MongoDB but MONGODB_URI not configured');
   }
 
-  return true; // local write always succeeds from in-process perspective
+  // Development fallback: write to local file only
+  localWrite(data);
+  console.log('[MongoDB] ⚠️  Using local file storage (development only)');
+  return true;
 }
 
 /**
