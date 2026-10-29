@@ -24,7 +24,9 @@ export function clearStoredToken() {
   }
 }
 
-const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+// For Vercel: API is on same domain (serverless functions)
+// For local dev with separate backend: use VITE_API_URL
+const API_BASE = (import.meta.env.VITE_API_URL || window.location.origin).replace(/\/+$/, '');
 
 async function request(endpoint, options = {}) {
   const token = getStoredToken();
