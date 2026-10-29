@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import os from 'os';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import apiRouter from '../backend/src/routes/index.js';
 import { verifyToken } from '../backend/src/utils/jwtUtils.js';
@@ -42,30 +44,36 @@ const ALLOWED_ORIGINS_API = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Same-origin requests (no Origin header) are allowed
+    if (!origin) return callback(null, true);
     if (
-      !origin ||
       ALLOWED_ORIGINS_API.includes(origin) ||
-      origin.endsWith('.vercel.app') ||
-      origin.includes('localhost') ||
-      origin.includes('127.0.0.1') ||
-      origin.endsWith('.ngrok.io') ||
-      origin.endsWith('.ngrok-free.app') ||
-      origin.endsWith('.ngrok-free.dev') ||
-      origin.endsWith('.ngrok.app') ||
-      origin.endsWith('.ngrok.com')
+      // Allow all Vercel preview/production deployments
+      origin.endsWith('.vercel.app')
     ) {
       callback(null, true);
     } else {
-      callback(null, false);
+      callback(new Error(`CORS: Origin '${origin}' is not allowed.`));
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning', 'X-Requested-With', 'Accept']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+app.use(async (_req, _res, next) => {
+  try {
+    if (typeof db.ensureInitialized === 'function') {
+      await db.ensureInitialized();
+    }
+  } catch (err) {
+    console.error('[DB Global Middleware Error]', err);
+  }
+  next();
+});
 
 // Hardened Security Headers
 app.use((_req, res, next) => {
@@ -82,7 +90,7 @@ app.use((_req, res, next) => {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
       "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://api.telegram.org https://*.ngrok-free.dev https://*.ngrok-free.app https://*.ngrok.app https://*.ngrok.io https://*.ngrok.com",
+      "connect-src 'self' https://api.telegram.org",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'"
@@ -91,68 +99,8 @@ app.use((_req, res, next) => {
   next();
 });
 
-// Optional transparent proxy to local laptop backend via ngrok tunnel
-const LAPTOP_BACKEND_URL = (
-  process.env.BACKEND_URL ||
-  process.env.NGROK_URL ||
-  process.env.TUNNEL_URL ||
-  ''
-).trim().replace(/\/+$/, '');
-
-if (LAPTOP_BACKEND_URL) {
-  console.log(`[API Proxy] Forwarding /api requests to laptop backend: ${LAPTOP_BACKEND_URL}`);
-  app.use('/api', async (req, res) => {
-    try {
-      const targetUrl = `${LAPTOP_BACKEND_URL}/api${req.url}`;
-      const forwardHeaders = { ...req.headers };
-      delete forwardHeaders.host;
-      delete forwardHeaders['content-length'];
-      forwardHeaders['ngrok-skip-browser-warning'] = 'true';
-      forwardHeaders['x-forwarded-host'] = req.headers.host || '';
-
-      const fetchOptions = {
-        method: req.method,
-        headers: forwardHeaders,
-        redirect: 'manual'
-      };
-
-      if (!['GET', 'HEAD'].includes(req.method) && req.body) {
-        fetchOptions.body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
-        forwardHeaders['content-type'] = forwardHeaders['content-type'] || 'application/json';
-      }
-
-      const backendRes = await fetch(targetUrl, fetchOptions);
-      res.status(backendRes.status);
-      backendRes.headers.forEach((val, key) => {
-        if (!['content-encoding', 'content-length', 'transfer-encoding'].includes(key.toLowerCase())) {
-          res.setHeader(key, val);
-        }
-      });
-      const buffer = await backendRes.arrayBuffer();
-      res.send(Buffer.from(buffer));
-    } catch (err) {
-      console.error('[API Proxy Error]:', err.message);
-      res.status(502).json({
-        success: false,
-        error: `Could not reach the local ARX database on your laptop via ${LAPTOP_BACKEND_URL}. Ensure your laptop is on, with 'node server.js' and ngrok active.`,
-        details: err.message
-      });
-    }
-  });
-}
-
-app.use(async (_req, _res, next) => {
-  try {
-    if (typeof db.ensureInitialized === 'function') {
-      await db.ensureInitialized();
-    }
-  } catch (err) {
-    console.error('[DB Global Middleware Error]', err);
-  }
-  next();
-});
-
 const uploadsDir = path.resolve(__dirname, '../uploads');
+const tmpUploadsDir = path.join(os.tmpdir(), 'uploads');
 // Security: deny direct static access to confidential documents, assignments, and certificates
 app.get(['/uploads/awards/*', '/uploads/student-projects/*', '/uploads/submissions/*', '/uploads/certificates/*'], (_req, res) => {
   res.status(403).json({
@@ -160,6 +108,9 @@ app.get(['/uploads/awards/*', '/uploads/student-projects/*', '/uploads/submissio
   });
 });
 app.use('/uploads', express.static(uploadsDir));
+if (fs.existsSync(tmpUploadsDir)) {
+  app.use('/uploads', express.static(tmpUploadsDir));
+}
 
 function adminViewGuard(req, res, next) {
   let token = null;
@@ -194,6 +145,16 @@ function adminViewGuard(req, res, next) {
     return res.status(403).json({ success: false, error: 'Access denied. Administrator privileges required.' });
   }
 
+  if (member.passwordChangedAt && payload.iat) {
+    const pwdChangedTimestamp = Math.floor(new Date(member.passwordChangedAt).getTime() / 1000);
+    if (payload.iat < pwdChangedTimestamp) {
+      if (req.accepts('html')) {
+        return res.redirect('/71354caa6bea2251/login');
+      }
+      return res.status(401).json({ success: false, error: 'Session expired due to a recent password change. Please log in again.' });
+    }
+  }
+
   req.user = { ...payload, role: member.role };
   next();
 }
@@ -211,7 +172,7 @@ function presidentViewGuard(req, res, next) {
 }
 
 app.get(['/admin-applications.html', '/71354caa6bea2251/applications'], adminViewGuard, (_req, res) => {
-  res.redirect('/71354caa6bea2251/dashboard');
+  res.sendFile(path.resolve(__dirname, '../private_views', 'admin-applications.html'));
 });
 
 app.use('/api', apiRouter);
