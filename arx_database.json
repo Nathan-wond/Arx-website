@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-10-29T12:31:24.962Z",
+  "exportedAt": "2026-10-29T13:54:15.445Z",
   "description": "ARX IT CLUB OF SJS Full Database Export",
   "settings": {
     "clubName": "ARX IT CLUB",
@@ -36,7 +36,7 @@
     "aboutHeroImageUrl": "/uploads/computer-lab-3.svg",
     "aboutTeamImageUrl": "/uploads/student-leadership.svg",
     "certificateStampUrl": "/uploads/academic-seal.svg",
-    "updatedAt": "2026-10-29T12:31:24.948Z"
+    "updatedAt": "2026-10-29T13:54:15.421Z"
   },
   "members": [
     {
@@ -44,7 +44,7 @@
       "memberId": "adminp",
       "studentName": "ARX Presidential Administrator",
       "class": "Club Executive / President",
-      "passwordHash": "81117490bfca4b8a9d8fad41bd49fdd7:10000:ae78b67c30d7e18afaa005228e6b1641899ccf08a7d154b05669b4b98861713ebaeeda35c4d3057015fd498b80f0825789a41cfa693153bf1905251adda51857",
+      "passwordHash": "ff3d8ab9ceb59bd8415b2af2301dac27:10000:f338752fa386dc3518fd2cc7efab78f115bf9071f7645c858d44334f7da2a36a0dfa631ce9af5aa5d6bba6aad22fe29b90420329972fc420ca35b0a092e6bf55",
       "phoneNumber": "N/A",
       "telegramUsername": "@arx_president",
       "role": "president",
@@ -63,14 +63,14 @@
         "courses"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-29T12:31:24.952Z"
+      "updatedAt": "2026-10-29T13:54:15.428Z"
     },
     {
       "id": "president_root",
       "memberId": "NEXORA",
       "studentName": "ARX Club President",
       "class": "Club Executive / President",
-      "passwordHash": "81117490bfca4b8a9d8fad41bd49fdd7:10000:ae78b67c30d7e18afaa005228e6b1641899ccf08a7d154b05669b4b98861713ebaeeda35c4d3057015fd498b80f0825789a41cfa693153bf1905251adda51857",
+      "passwordHash": "ff3d8ab9ceb59bd8415b2af2301dac27:10000:f338752fa386dc3518fd2cc7efab78f115bf9071f7645c858d44334f7da2a36a0dfa631ce9af5aa5d6bba6aad22fe29b90420329972fc420ca35b0a092e6bf55",
       "phoneNumber": "N/A",
       "telegramUsername": "@arx_president",
       "role": "president",
@@ -88,14 +88,14 @@
         "courses"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-29T12:31:24.952Z"
+      "updatedAt": "2026-10-29T13:54:15.428Z"
     },
     {
       "id": "admin_officer",
       "memberId": "admino",
       "studentName": "ARX Officer Administrator",
       "class": "Club Officer / Moderator",
-      "passwordHash": "16e289ed9b202965bf65c2f9195760d5:10000:819596ec1ef6730d840c6c229dd498ef3f970f3e4121c1748894d5966922594b982d38e04b06516465e4d654feb8af92ddca1b506b1147a2b2ace3d3dae9f9a3",
+      "passwordHash": "839845b8e39fd018523ba995f58912f8:10000:123578329337b47d7c4a184c9752fd7bebb78da83af584d0b6136c14ea6fb11bb44656ae5b58014ed96fc200c54761262500531376ec7215829b20f8ab104429",
       "phoneNumber": "N/A",
       "telegramUsername": "@itclub_admin",
       "role": "admin",
@@ -111,14 +111,14 @@
         "certificates_issue"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-29T12:31:24.955Z"
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     },
     {
       "id": "admin_root",
       "memberId": "ARX-OFFICER-001",
       "studentName": "ARX Operations Officer",
       "class": "Club Officer / Moderator",
-      "passwordHash": "16e289ed9b202965bf65c2f9195760d5:10000:819596ec1ef6730d840c6c229dd498ef3f970f3e4121c1748894d5966922594b982d38e04b06516465e4d654feb8af92ddca1b506b1147a2b2ace3d3dae9f9a3",
+      "passwordHash": "839845b8e39fd018523ba995f58912f8:10000:123578329337b47d7c4a184c9752fd7bebb78da83af584d0b6136c14ea6fb11bb44656ae5b58014ed96fc200c54761262500531376ec7215829b20f8ab104429",
       "phoneNumber": "N/A",
       "telegramUsername": "@itclub_admin",
       "role": "admin",
@@ -132,7 +132,7 @@
         "courses_view"
       ],
       "createdAt": "2026-09-01T00:00:00.000Z",
-      "updatedAt": "2026-10-29T12:31:24.955Z"
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     }
   ],
   "courses": [
@@ -171,8 +171,8 @@
       "thumbnailMediaId": "med_course_web_dev",
       "bannerMediaId": "med_course_web_dev",
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z",
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     },
     {
       "id": "crs_python",
@@ -209,8 +209,8 @@
       "thumbnailMediaId": "med_course_python",
       "bannerMediaId": "med_course_python",
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z",
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     },
     {
       "id": "crs_cybersecurity",
@@ -247,8 +247,8 @@
       "thumbnailMediaId": "med_course_cyber",
       "bannerMediaId": "med_course_cyber",
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z",
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     },
     {
       "id": "crs_robotics",
@@ -285,8 +285,8 @@
       "thumbnailMediaId": "med_course_robotics",
       "bannerMediaId": "med_course_robotics",
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z",
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     },
     {
       "id": "crs_ai&machinelearning",
@@ -323,8 +323,8 @@
       "thumbnailMediaId": "med_course_cyber",
       "bannerMediaId": "med_course_cyber",
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z",
+      "updatedAt": "2026-10-29T13:54:15.434Z"
     }
   ],
   "enrollments": [],
@@ -354,7 +354,7 @@
         }
       ],
       "qrData": "https://arx-website-sjs.vercel.app/#certificates?id=ARX-CYBER-2026-10492",
-      "createdAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.434Z"
     }
   ],
   "awards": [],
@@ -790,9 +790,9 @@
       "icon": "send",
       "isEnabled": true,
       "order": 1,
-      "id": "soc_1793277084956_975",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_14",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "platform": "Instagram",
@@ -801,9 +801,9 @@
       "icon": "instagram",
       "isEnabled": true,
       "order": 2,
-      "id": "soc_1793277084956_389",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_16",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "platform": "LinkedIn",
@@ -812,9 +812,9 @@
       "icon": "linkedin",
       "isEnabled": false,
       "order": 3,
-      "id": "soc_1793277084956_236",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_559",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "platform": "X",
@@ -823,9 +823,9 @@
       "icon": "twitter",
       "isEnabled": false,
       "order": 4,
-      "id": "soc_1793277084956_383",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_525",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "platform": "Facebook",
@@ -834,9 +834,9 @@
       "icon": "facebook",
       "isEnabled": false,
       "order": 5,
-      "id": "soc_1793277084956_543",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_467",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "platform": "TikTok",
@@ -845,9 +845,9 @@
       "icon": "video",
       "isEnabled": false,
       "order": 6,
-      "id": "soc_1793277084956_538",
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "id": "soc_1793282055435_362",
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     }
   ],
   "governance": [
@@ -865,8 +865,8 @@
       "order": 1,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.956Z",
-      "updatedAt": "2026-10-29T12:31:24.956Z"
+      "createdAt": "2026-10-29T13:54:15.435Z",
+      "updatedAt": "2026-10-29T13:54:15.435Z"
     },
     {
       "id": "gov_yohannes_nigatu",
@@ -882,8 +882,8 @@
       "order": 2,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
+      "createdAt": "2026-10-29T13:54:15.445Z",
+      "updatedAt": "2026-10-29T13:54:15.445Z"
     },
     {
       "id": "gov_nathan_haddis",
@@ -899,8 +899,8 @@
       "order": 3,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
+      "createdAt": "2026-10-29T13:54:15.445Z",
+      "updatedAt": "2026-10-29T13:54:15.445Z"
     },
     {
       "id": "gov_natan_yonas",
@@ -916,151 +916,83 @@
       "order": 4,
       "isUniqueRole": true,
       "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
-    },
-    {
-      "id": "gov_nathan_wendesen",
-      "name": "Nathan Wendesen",
-      "role": "Front-End Development Instructor",
-      "specialty": "Web Development Instructor",
-      "department": "Web Development",
-      "category": "instructor",
-      "description": "Mentors students on modern UI/UX design, interactive frontend applications, responsive architectures, and web standards.",
-      "photoUrl": "/team/nathan.jpg",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 5,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
-    },
-    {
-      "id": "gov_abenezer_ameha",
-      "name": "Abenezer Ameha",
-      "role": "Software Engineering Instructor",
-      "specialty": "Software Engineering Instructor",
-      "department": "Software Engineering",
-      "category": "instructor",
-      "description": "Mentors and instructs club members on software engineering foundations, algorithmic problem solving, and modern development workflows.",
-      "photoUrl": "/team/ab.jpg?v=2",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 6,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
-    },
-    {
-      "id": "gov_nafyad_bayissa",
-      "name": "Nafyad Bayissa",
-      "role": "Python Instructor",
-      "specialty": "Python Instructor",
-      "department": "Python Programming",
-      "category": "instructor",
-      "description": "Teaches foundational and advanced Python syntax, object-oriented concepts, scripting automation, and computational thinking.",
-      "photoUrl": "/team/nafyad.jpg",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 7,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
-    },
-    {
-      "id": "gov_firaol_tadesse",
-      "name": "Firaol Tadesse",
-      "role": "Python Instructor",
-      "specialty": "Python Instructor",
-      "department": "Python Programming",
-      "category": "instructor",
-      "description": "Teaches Python programming foundations, problem solving, and hands-on laboratory exercises for student developers.",
-      "photoUrl": "/team/firaol.png",
-      "positionOffset": "center center",
-      "socialLinks": {},
-      "order": 8,
-      "isUniqueRole": false,
-      "isPublished": true,
-      "createdAt": "2026-10-29T12:31:24.962Z",
-      "updatedAt": "2026-10-29T12:31:24.962Z"
+      "createdAt": "2026-10-29T13:54:15.445Z",
+      "updatedAt": "2026-10-29T13:54:15.445Z"
     }
   ],
   "botCommands": [],
   "auditLogs": [
     {
-      "id": "aud_1793277084962_553",
+      "id": "aud_1793282055445_131",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_firaol_tadesse",
       "targetName": "Firaol Tadesse",
       "details": "Added new team member Firaol Tadesse (Python Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_675",
+      "id": "aud_1793282055445_237",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nafyad_bayissa",
       "targetName": "Nafyad Bayissa",
       "details": "Added new team member Nafyad Bayissa (Python Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_798",
+      "id": "aud_1793282055445_442",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_abenezer_ameha",
       "targetName": "Abenezer Ameha",
       "details": "Added new team member Abenezer Ameha (Software Engineering Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_996",
+      "id": "aud_1793282055445_815",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nathan_wendesen",
       "targetName": "Nathan Wendesen",
       "details": "Added new team member Nathan Wendesen (Front-End Development Instructor) in category instructor",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_245",
+      "id": "aud_1793282055445_990",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_natan_yonas",
       "targetName": "Natan Yonas",
       "details": "Added new team member Natan Yonas (Chief Technology Officer (CTO)) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_373",
+      "id": "aud_1793282055445_82",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_nathan_haddis",
       "targetName": "Nathan Haddis",
       "details": "Added new team member Nathan Haddis (Chief Marketing Officer) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084962_404",
+      "id": "aud_1793282055445_630",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_yohannes_nigatu",
       "targetName": "Yohannes Nigatu",
       "details": "Added new team member Yohannes Nigatu (Vice President) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.962Z"
+      "timestamp": "2026-10-29T13:54:15.445Z"
     },
     {
-      "id": "aud_1793277084956_951",
+      "id": "aud_1793282055435_476",
       "action": "CREATE_TEAM_MEMBER",
       "targetId": "gov_kidus_elias",
       "targetName": "Kidus Elias",
       "details": "Added new team member Kidus Elias (President) in category leadership",
       "performedBy": "Club Admin",
-      "timestamp": "2026-10-29T12:31:24.956Z"
+      "timestamp": "2026-10-29T13:54:15.435Z"
     }
   ]
 }
