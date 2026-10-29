@@ -2,6 +2,19 @@ import {} from '../middleware/authMiddleware.js';
 import { db } from '../services/db.js';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
+
+function getUploadsDir() {
+  const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  let dir = isServerless ? path.join(os.tmpdir(), 'uploads') : path.resolve(process.cwd(), 'uploads');
+  try {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  } catch {
+    dir = path.join(os.tmpdir(), 'uploads');
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  }
+  return dir;
+}
 
 function formatBytes(bytes, decimals = 1) {
   if (bytes === 0) return '0 B';
@@ -16,8 +29,8 @@ const ALLOWED_MIME_TYPES = {
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg',
   'image/png': 'png',
-  'image/webp': 'webp',
-  'image/svg+xml': 'svg'
+  'image/webp': 'webp'
+  // Note: SVG intentionally excluded — SVGs can contain embedded JavaScript (XSS risk)
 };
 
 export const mediaController = {
@@ -95,20 +108,13 @@ export const mediaController = {
       res.status(400).json({ error: 'File content does not match a valid PNG image.' });
       return;
     }
-    if (mimeType === 'image/svg+xml') {
-      const svgContent = buffer.toString('utf-8');
-      // Block SVGs containing scripts or dangerous event handlers (XSS prevention)
-      if (/<script[\s>]/i.test(svgContent) || /javascript:/i.test(svgContent) || /on\w+\s*=/i.test(svgContent)) {
-        res.status(400).json({ error: 'SVG file contains potentially dangerous script content and cannot be uploaded.' });
-        return;
-      }
+    if (mimeType === 'image/webp' && (buffer.length < 12 || buffer.toString('ascii', 0, 4) !== 'RIFF' || buffer.toString('ascii', 8, 12) !== 'WEBP')) {
+      res.status(400).json({ error: 'File content does not match a valid WebP image.' });
+      return;
     }
 
     
-    const uploadsDir = path.resolve(process.cwd(), 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
+    const uploadsDir = getUploadsDir();
 
     const ext = ALLOWED_MIME_TYPES[mimeType];
     const cleanBasename = filename ?
@@ -211,7 +217,7 @@ export const mediaController = {
     }
 
     const buffer = Buffer.from(base64Data, 'base64');
-    const uploadsDir = path.resolve(process.cwd(), 'uploads');
+    const uploadsDir = getUploadsDir();
     const ext = ALLOWED_MIME_TYPES[mimeType];
     const cleanBasename = filename ?
     path.basename(filename).replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase() :

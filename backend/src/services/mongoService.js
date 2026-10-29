@@ -14,17 +14,37 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dns from 'dns';
+
+// Fix Windows / local ISP DNS refusal on querySrv for mongodb+srv://
+if (typeof dns.setServers === 'function') {
+  try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  } catch (_) {}
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
+function sanitizeMongoUri(raw) {
+  if (!raw || typeof raw !== 'string') return '';
+  let uri = raw.trim();
+  return uri.replace(/^(mongodb(?:\+srv)?:\/\/)(?:<([^>]+)>|([^:]+)):(?:<([^>]+)>|([^@]+))@/i, (_match, prefix, u1, u2, p1, p2) => {
+    const user = u1 || u2 || '';
+    const pass = p1 || p2 || '';
+    return prefix + user + ':' + pass + '@';
+  });
+}
+
 // ── Connection string resolution ──────────────────────────────────────────────
-const MONGO_URI = (
+const RAW_MONGO_URI = (
   process.env.MONGODB_URI ||
   process.env.MONGO_URI   ||
   process.env.DATABASE_URL ||
   ''
 ).trim();
+
+const MONGO_URI = sanitizeMongoUri(RAW_MONGO_URI);
 
 export const isMongoConfigured = Boolean(
   MONGO_URI &&
@@ -41,6 +61,7 @@ const TMP_DB_PATH     = path.join(
 // ── In-memory cache (so readDb() can return synchronously) ───────────────────
 let _cache = null;
 let _connected = false;
+let _connectingPromise = null;
 
 // ── Mongoose schema ──────────────────────────────────────────────────────────
 const stateSchema = new mongoose.Schema(
@@ -69,6 +90,9 @@ async function ensureConnected() {
     _connected = true;
     return true;
   }
+  if (_connectingPromise) {
+    return _connectingPromise;
+  }
 
   if (!isMongoConfigured) {
     const isProduction = process.env.NODE_ENV === 'production';
@@ -79,6 +103,7 @@ async function ensureConnected() {
     return false;
   }
 
+  _connectingPromise = (async () => {
   try {
     // Serverless-optimized connection settings
     await mongoose.connect(MONGO_URI, {
@@ -110,6 +135,10 @@ async function ensureConnected() {
     }
     return false;
   }
+})().finally(() => {
+    _connectingPromise = null;
+  });
+  return _connectingPromise;
 }
 
 mongoose.connection.on('disconnected', () => {
