@@ -46,24 +46,31 @@ async function request(endpoint, options = {}) {
 
   const url = endpoint.startsWith('http') ? endpoint : `${API_BASE}${endpoint}`;
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-    
-    credentials: 'include'
-  });
+  console.log('[API Request]', options.method || 'GET', url);
 
-  const data = await response.json().catch(() => ({}));
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers,
+      credentials: 'include'
+    });
 
-  if (!response.ok) {
-    if (response.status === 413) {
-      throw new Error('Upload payload too large. The files you attached exceed the server limit. Please upload smaller or compressed files (under 2.5MB).');
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      if (response.status === 413) {
+        throw new Error('Upload payload too large. The files you attached exceed the server limit. Please upload smaller or compressed files (under 2.5MB).');
+      }
+      const errorMessage = data.error || data.message || `Request failed with status ${response.status}`;
+      console.error('[API Error]', response.status, errorMessage);
+      throw new Error(errorMessage);
     }
-    const errorMessage = data.error || data.message || `Request failed with status ${response.status}`;
-    throw new Error(errorMessage);
-  }
 
-  return data;
+    return data;
+  } catch (err) {
+    console.error('[API Fetch Error]', url, err);
+    throw err;
+  }
 }
 
 export const api = {
