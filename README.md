@@ -58,6 +58,16 @@ npm run dev
 2. Set the environment variables in the Vercel dashboard
 3. Deploy — Vercel will use `vercel.json` automatically
 
+### Deleting Vercel Environment Variables
+
+This permanently deletes the user-managed environment variables for the selected Vercel project. Vercel-managed system variables and local `.env` files are not changed. Before running it, temporarily paste your token and project name into the constants at the top of `scripts/delete-vercel-env.ts`. The script asks you to type `DELETE` before deleting anything. Remove the token from the file after running it; do not commit a real token.
+
+Run it from the project folder:
+
+```bash
+npm run vercel:env:delete
+```
+
 ---
 
 ## Contributing
