@@ -196,11 +196,9 @@ export const adminController = {
         return;
       }
 
-      // BUG FIX: Await the save to ensure approved status is durably persisted
-      try {
-        await db._saveToFile();
-      } catch (saveErr) {
-        console.warn('[Admin] approveApplication save warning:', saveErr?.message);
+      const persisted = await db._saveToFile();
+      if (!persisted) {
+        throw new Error('Could not persist the application approval.');
       }
 
       // Proactively notify student on Telegram and Email
@@ -241,11 +239,9 @@ export const adminController = {
         return;
       }
 
-      // BUG FIX: Await the save to ensure rejected status is durably persisted
-      try {
-        await db._saveToFile();
-      } catch (saveErr) {
-        console.warn('[Admin] rejectApplication save warning:', saveErr?.message);
+      const persisted = await db._saveToFile();
+      if (!persisted) {
+        throw new Error('Could not persist the application rejection.');
       }
 
       // Proactively notify student on Telegram and Email

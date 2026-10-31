@@ -24,6 +24,11 @@ apiRouter.use(async (_req, _res, next) => {
     }
   } catch (err) {
     console.error('[DB] ensureInitialized middleware error:', err);
+    res.status(503).json({
+      success: false,
+      error: 'The application database is unavailable. Please try again later.'
+    });
+    return;
   }
   next();
 });

@@ -10,6 +10,7 @@ class DatabaseStore {
   isFileHydrated = false;
   lastFileSync = 0;
   initPromise = null;
+  saveQueue = Promise.resolve();
 
   members = new Map();
   memberAwardFiles = new Map();
@@ -152,7 +153,8 @@ class DatabaseStore {
       try {
         const data = await readDbAsync();
         if (!data) {
-          this._saveToFile();
+          const saved = await this._saveToFile();
+          if (!saved) throw new Error('Could not initialize the application database.');
           this.isFileHydrated = true;
           this.lastFileSync = Date.now();
           return;
@@ -449,7 +451,8 @@ class DatabaseStore {
         this.isFileHydrated = true;
         this.lastFileSync = Date.now();
         if (needsSave) {
-          await this._saveToFile();
+          const saved = await this._saveToFile();
+          if (!saved) throw new Error('Could not save the initialized application database.');
         }
         console.log('[DB] State loaded successfully:', {
           members: this.members.size,
@@ -462,9 +465,7 @@ class DatabaseStore {
         });
       } catch (err) {
         console.error('[DB] State hydration error:', err?.message || err);
-        if (process.env.NODE_ENV === 'production') {
-          throw err; // Fatal in production
-        }
+        throw err;
       } finally {
         this.initPromise = null;
       }
@@ -509,22 +510,22 @@ class DatabaseStore {
         auditLogs: Array.isArray(this.auditLogs) ? this.auditLogs : []
       };
 
-      // Await the write operation to ensure data is persisted
-      const success = await writeDb(snapshot);
+      const pendingWrite = this.saveQueue.then(() => writeDb(snapshot));
+      this.saveQueue = pendingWrite.catch(() => {});
+      const success = await pendingWrite;
       if (!success) {
         console.error('[DB] ❌ Persistence failed - data may not be saved!');
-        if (process.env.NODE_ENV === 'production') {
-          throw new Error('Critical: Database write failed in production');
-        }
+        throw new Error('Database persistence failed.');
       }
       return success;
     } catch (err) {
       console.error('[DB] ❌ Save error:', err?.message || err);
-      if (process.env.NODE_ENV === 'production') {
-        throw err; // Fatal in production
-      }
       return false;
     }
+  }
+
+  async flushPersistence() {
+    await this.saveQueue;
   }
 
   initMedia() {

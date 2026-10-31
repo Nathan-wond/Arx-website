@@ -1,11 +1,7 @@
 /**
  * fileService.js
  * ─────────────────────────────────────────────────────────────────────────────
- * Unified persistence service.
- * Priority order:
- *   1. MongoDB Atlas (via mongoService.js) — when MONGODB_URI is set
- *   2. Neon PostgreSQL (via neonPostgresService.js) — when DATABASE_URL is set
- *   3. Local JSON file (arx_database.json) — always available as fallback
+ * Persistence service selected by DATABASE_PROVIDER.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -35,6 +31,30 @@ const TMP_DB_PATH     = path.join(
   'arx_database.json'
 );
 
+const defaultProvider = process.env.NODE_ENV === 'production'
+  ? (isMongoConfigured ? 'mongodb' : isNeonConfigured ? 'neon' : 'local')
+  : 'local';
+const requestedProvider = (process.env.DATABASE_PROVIDER || defaultProvider).trim().toLowerCase();
+const providerAliases = {
+  mongo: 'mongodb',
+  postgres: 'neon'
+};
+
+export const PERSISTENCE_PROVIDER = providerAliases[requestedProvider] || requestedProvider;
+
+if (!['local', 'mongodb', 'neon'].includes(PERSISTENCE_PROVIDER)) {
+  throw new Error(`Unsupported DATABASE_PROVIDER "${requestedProvider}". Use local, mongodb, or neon.`);
+}
+if (PERSISTENCE_PROVIDER === 'mongodb' && !isMongoConfigured) {
+  throw new Error('DATABASE_PROVIDER is mongodb, but MONGODB_URI is not configured.');
+}
+if (PERSISTENCE_PROVIDER === 'neon' && !isNeonConfigured) {
+  throw new Error('DATABASE_PROVIDER is neon, but DATABASE_URL is not configured.');
+}
+if (PERSISTENCE_PROVIDER === 'local' && process.env.NODE_ENV === 'production') {
+  throw new Error('Local JSON persistence is not durable in production. Configure DATABASE_PROVIDER=mongodb or neon.');
+}
+
 // ── Local file helpers ───────────────────────────────────────────────────────
 
 function localRead() {
@@ -55,16 +75,19 @@ function localRead() {
 
 function localWrite(data) {
   const payload = JSON.stringify(data, null, 2);
-  try {
-    const tmp = PROJECT_DB_PATH + '.tmp';
-    fs.writeFileSync(tmp, payload, 'utf8');
-    fs.renameSync(tmp, PROJECT_DB_PATH);
-  } catch { /* read-only on serverless */ }
+  fs.mkdirSync(path.dirname(PROJECT_DB_PATH), { recursive: true });
+  const tmp = PROJECT_DB_PATH + '.tmp';
+  fs.writeFileSync(tmp, payload, 'utf8');
+  fs.renameSync(tmp, PROJECT_DB_PATH);
+
   try {
     const tmp = TMP_DB_PATH + '.tmp';
+    fs.mkdirSync(path.dirname(TMP_DB_PATH), { recursive: true });
     fs.writeFileSync(tmp, payload, 'utf8');
     fs.renameSync(tmp, TMP_DB_PATH);
-  } catch { /* ignore */ }
+  } catch (err) {
+    console.warn('[Persistence] Could not update temporary database backup:', err.message);
+  }
 }
 
 // ── Public Persistence API ───────────────────────────────────────────────────
@@ -75,89 +98,73 @@ let neonInitialized = false;
  * Synchronous read — returns whatever is cached locally.
  */
 export function readDb() {
-  // MongoDB has its own local cache layer
-  if (isMongoConfigured) return mongoReadDb();
+  if (PERSISTENCE_PROVIDER === 'mongodb') return mongoReadDb();
   return localRead();
 }
 
 /**
- * Async read — fetches from the best available backend.
- * Priority: MongoDB → Neon PostgreSQL → local file.
+ * Async read — fetches from the configured backend.
  */
 export async function readDbAsync() {
-  // ── 1. MongoDB Atlas (highest priority) ──────────────────────────────────
-  if (isMongoConfigured) {
-    try {
-      const data = await mongoReadDbAsync();
-      if (data) return data;
-    } catch (err) {
-      console.warn('[Persistence] MongoDB read failed, trying fallback:', err?.message);
-    }
+  if (PERSISTENCE_PROVIDER === 'mongodb') {
+    return mongoReadDbAsync();
   }
 
   const local = localRead();
-
-  // ── 2. Neon PostgreSQL ───────────────────────────────────────────────────
-  if (isNeonConfigured) {
-    try {
-      if (!neonInitialized) {
-        await initNeonSchema();
-        neonInitialized = true;
-      }
-      const neonData = await fetchStateFromNeon();
-      if (neonData && neonData.members && neonData.members.length > 0) {
-        const merged = { ...local, ...neonData };
-        localWrite(merged);
-        return merged;
-      } else if (local) {
-        console.log('[Neon PostgreSQL] Database empty. Seeding from local store...');
-        await syncStateToNeon(local);
-        return local;
-      }
-    } catch (neonErr) {
-      console.warn('[Neon PostgreSQL Read Warning]:', neonErr?.message || neonErr);
+  if (PERSISTENCE_PROVIDER === 'neon') {
+    if (!neonInitialized) {
+      const initialized = await initNeonSchema();
+      if (!initialized) throw new Error('Could not initialize the Neon PostgreSQL schema.');
+      neonInitialized = true;
     }
+    const neonData = await fetchStateFromNeon();
+    if (neonData) return { ...local, ...neonData };
+    if (local) {
+      console.log('[Neon PostgreSQL] Database empty. Seeding from local store...');
+      await syncStateToNeon(local);
+      return local;
+    }
+    return null;
   }
 
   return local;
 }
 
 /**
- * Write to the best available backend(s).
+ * Write to the configured backend.
  */
 export async function writeDb(data) {
   if (!data) return false;
 
-  // ── 1. MongoDB Atlas ─────────────────────────────────────────────────────
-  if (isMongoConfigured) {
+  if (PERSISTENCE_PROVIDER === 'mongodb') {
     return mongoWriteDb(data);
   }
 
-  // Always write locally
-  localWrite(data);
-
-  // ── 2. Neon PostgreSQL ───────────────────────────────────────────────────
-  if (isNeonConfigured) {
-    try {
-      if (!neonInitialized) {
-        await initNeonSchema();
-        neonInitialized = true;
-      }
-      syncStateToNeon(data).catch(err =>
-        console.warn('[Neon PostgreSQL Background Sync Warning]:', err?.message)
-      );
-      return true;
-    } catch (err) {
-      console.warn('[Neon PostgreSQL Sync Error]:', err?.message);
-    }
+  if (PERSISTENCE_PROVIDER === 'local') {
+    localWrite(data);
+    return true;
   }
 
+  if (!neonInitialized) {
+    const initialized = await initNeonSchema();
+    if (!initialized) throw new Error('Could not initialize the Neon PostgreSQL schema.');
+    neonInitialized = true;
+  }
+  localWrite(data);
+  const synced = await syncStateToNeon(data);
+  if (!synced) {
+    throw new Error('Could not persist state to Neon PostgreSQL.');
+  }
   return true;
 }
 
+export function getPersistenceProvider() {
+  return PERSISTENCE_PROVIDER;
+}
+
 export function dbFileExists() {
-  if (isMongoConfigured) return mongoDbFileExists();
-  if (isNeonConfigured) return true;
+  if (PERSISTENCE_PROVIDER === 'mongodb') return mongoDbFileExists();
+  if (PERSISTENCE_PROVIDER === 'neon') return true;
   return [PROJECT_DB_PATH, TMP_DB_PATH].some(fp => {
     try { return fs.existsSync(fp); } catch { return false; }
   });

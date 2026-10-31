@@ -1,5 +1,11 @@
 # ARX IT CLUB - Data Persistence & Registration Flow Fix Guide
 
+> **Current Vercel + local MongoDB setup:** The sections below include historical Atlas guidance and are not the current configuration. For the agreed setup, run the Node API and MongoDB on your PC, expose only the Node API through ngrok, and set Vercel's `VITE_API_URL` to the ngrok HTTPS URL.
+>
+> In your local `.env`, use `DATABASE_PROVIDER=mongodb` and `MONGODB_URI=mongodb://127.0.0.1:27017/arx_it_club`. Start the local server with `npm run dev`; it attempts to start ngrok and prints the URL. In Vercel **Project → Settings → Environment Variables**, set `VITE_API_URL=https://<your-ngrok-host>` with no trailing slash, then redeploy. The Vercel CSP permits standard ngrok domains. Never tunnel MongoDB port `27017`.
+>
+> The PC, MongoDB, Node server, and ngrok must remain online. A changing ngrok URL requires updating `VITE_API_URL` and redeploying; use a reserved ngrok domain for a stable URL. Vercel does not need `MONGODB_URI` in this setup.
+
 **Date**: 2026-10-27  
 **Issues Fixed**:
 1. Registration flow - removed activation code section
@@ -33,19 +39,33 @@
 
 ## Issue 2: MongoDB Persistence Problem ⚠️ ACTION REQUIRED
 
-### Root Cause
-Your `.env` file has:
-```env
-MONGODB_URI=mongodb://localhost:27017/arx_it_club
-```
+### Persistence Configuration
+The server now uses the backend explicitly selected by `DATABASE_PROVIDER`:
 
-**This is a LOCAL MongoDB instance**, which causes:
-- ❌ Data lost on Vercel serverless restarts
-- ❌ Connection fails when using ngrok tunneling
-- ❌ Not accessible from deployed Vercel environment
-- ❌ Each request may see different data state
+- `local` writes to the project-root `arx_database.json` file and persists across local server restarts.
+- `mongodb` uses the URI in `MONGODB_URI` (local MongoDB or Atlas).
+- `neon` uses Neon PostgreSQL and requires `DATABASE_URL`.
 
-### Solution: Use MongoDB Atlas (Cloud Database)
+The server reports database write failures instead of confirming registrations that were not saved.
+
+### Vercel Frontend + ngrok + MongoDB on Your PC
+
+The browser sends API requests from the Vercel site through the HTTPS ngrok tunnel to the Node.js server running on your PC. That server connects to MongoDB on the same PC. Keep MongoDB, the Node server, ngrok, and your PC online whenever the site needs its API.
+
+1. Make sure MongoDB is running locally and set these values in your **local `.env`**:
+   ```env
+   DATABASE_PROVIDER=mongodb
+   MONGODB_URI=mongodb://127.0.0.1:27017/arx_it_club
+   ```
+2. Install and authenticate ngrok if needed. Start the API server with `npm run dev`; it attempts to start ngrok and prints the public HTTPS URL. Do not expose MongoDB's port `27017` through ngrok.
+3. In Vercel, open **Project → Settings → Environment Variables** and set `VITE_API_URL` to the ngrok HTTPS URL, with no trailing slash. This is a frontend build-time setting; redeploy after changing it.
+4. If you have a custom Vercel domain, add its exact origin to `ALLOWED_ORIGINS` in your local `.env`, then restart the server. The built-in CORS rule already allows `*.vercel.app` origins.
+
+The Vercel Content Security Policy permits HTTPS connections to standard ngrok domains. If you use an ngrok reserved/custom domain outside those domains, update `connect-src` in `vercel.json` to include that exact HTTPS origin.
+
+With a free, changing ngrok URL, update `VITE_API_URL` and redeploy whenever the URL changes. A reserved ngrok domain avoids that repeated update. If your PC, MongoDB, Node server, or tunnel is offline, API requests will fail; this is not an always-on production architecture. Vercel does not need `MONGODB_URI` in this setup because it does not connect to MongoDB directly.
+
+### Alternative: MongoDB Atlas for Deployment
 
 #### Step 1: Create MongoDB Atlas Account (Free)
 1. Go to https://www.mongodb.com/cloud/atlas
@@ -75,41 +95,7 @@ MONGODB_URI=mongodb+srv://your-username:your-password@cluster0.xxxxx.mongodb.net
 
 ## Issue 3: Vercel + ngrok + MongoDB Networking
 
-### Current Configuration Analysis
-
-**Your CSP headers in `vercel.json`:**
-```json
-"connect-src": "self https://api.telegram.org https://*.ngrok-free.dev https://*.ngrok-free.app https://*.ngrok.app https://*.ngrok.io https://*.ngrok.com"
-```
-✅ This is correct for ngrok tunneling
-
-### Problem: Session Persistence
-When using local MongoDB with ngrok:
-- Each ngrok reconnection = new tunnel URL
-- Vercel serverless = stateless (no persistent connections)
-- Local MongoDB = not accessible from Vercel deployment
-
-### Solution Steps
-
-1. **Use MongoDB Atlas** (as explained above)
-   - Cloud database accessible from anywhere
-   - Persistent across all connections
-   - Works with Vercel, ngrok, and local dev
-
-2. **Verify Connection in Code**
-   The mongoService.js already handles this:
-   ```javascript
-   MONGO_URI = process.env.MONGODB_URI || 
-               process.env.MONGO_URI || 
-               process.env.DATABASE_URL
-   ```
-
-3. **Test Connection**
-   ```bash
-   # Test MongoDB connection
-   npm run dev
-   # Watch console for: "[MongoDB] ✅ Connected successfully to MongoDB Atlas."
-   ```
+For the local-database tunnel setup, the browser talks to the ngrok URL, not Vercel's serverless API function. `VITE_API_URL` selects that API host, Vercel's `connect-src` policy permits the request, and the local Express server allows Vercel origins via CORS.
 
 ---
 

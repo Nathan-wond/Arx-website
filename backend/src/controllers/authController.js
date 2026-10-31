@@ -415,13 +415,12 @@ export const authController = {
       const botUrl = settings.telegramBotUrl || 'https://t.me/ARXITCLUB_bot';
       const activationUrl = `${botUrl}?start=${activationSession.token}`;
 
-      // BUG FIX: Await the save so member + session token are durably persisted before response
-      try {
-        if (typeof db._saveToFile === 'function') {
-          await db._saveToFile();
+      // Persist the complete application before telling the applicant it succeeded.
+      if (typeof db._saveToFile === 'function') {
+        const persisted = await db._saveToFile();
+        if (!persisted) {
+          throw new Error('Your application could not be saved. Please try again.');
         }
-      } catch (saveErr) {
-        console.warn('[Register] Background sync warning:', saveErr?.message);
       }
 
       res.status(201).json({

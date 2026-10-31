@@ -221,7 +221,10 @@ export async function readDbAsync() {
           const local = localRead();
           if (local) {
             console.log('[MongoDB] ℹ️  Empty MongoDB document found. Initializing from local state...');
-            await _writeMongo(local);
+            const initialized = await _writeMongo(local);
+            if (!initialized) {
+              throw new Error('Could not initialize MongoDB from the local database file.');
+            }
             _cache = local;
             return local;
           }
@@ -232,13 +235,10 @@ export async function readDbAsync() {
         }
       } catch (err) {
         console.error('[MongoDB] ❌ Read error:', err?.message || err);
-        if (isProduction) {
-          throw new Error(`Production MongoDB read failed: ${err?.message}`);
-        }
-        // Development: fall through to local file fallback
+        throw new Error(`MongoDB read failed: ${err?.message}`);
       }
-    } else if (isProduction) {
-      throw new Error('Production requires MongoDB but connection failed');
+    } else {
+      throw new Error('MongoDB is configured but the connection failed.');
     }
   } else if (isProduction) {
     throw new Error('Production requires MongoDB but MONGODB_URI not configured');
@@ -311,12 +311,8 @@ export async function writeDb(data) {
       }
       return true;
     } else {
-      // MongoDB write failed
-      if (isProduction) {
-        console.error('[MongoDB] ❌ CRITICAL: Production write failed. Data not persisted.');
-        throw new Error('Production MongoDB write failed - data persistence failure');
-      }
-      console.warn('[MongoDB] ⚠️  MongoDB write failed. Falling back to local file (development only).');
+      console.error('[MongoDB] ❌ Write failed. Data was not persisted.');
+      throw new Error('MongoDB write failed - data persistence failure');
     }
   } else if (isProduction) {
     console.error('[MongoDB] ❌ CRITICAL: Production requires MongoDB but MONGODB_URI not configured.');

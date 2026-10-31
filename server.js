@@ -9,6 +9,7 @@ import { startTelegramLongPolling } from './backend/src/controllers/telegramCont
 import { verifyToken } from './backend/src/utils/jwtUtils.js';
 import { db } from './backend/src/services/db.js';
 import { startNgrokTunnel } from './backend/src/utils/ngrokHelper.js';
+import { getPersistenceProvider } from './backend/src/services/fileService.js';
 
 process.on('unhandledRejection', (reason) => {
   console.error('[Unhandled Promise Rejection]', reason);
@@ -233,28 +234,15 @@ async function startServer() {
     });
   });
 
-  app.listen(PORT, '0.0.0.0', async () => {
+  const server = app.listen(PORT, '0.0.0.0', async () => {
     console.log(`\n🚀 IT Club server running at http://0.0.0.0:${PORT}`);
     console.log(`🤖 Telegram Bot Target: @${CONFIG.TELEGRAM_BOT_USERNAME} (${CONFIG.TELEGRAM_BOT_URL})`);
     console.log(`📢 Preserved Official Channel: ${CONFIG.TELEGRAM_CHANNEL_HANDLE}`);
     console.log(`🔒 Telegram Bot API Token: ${CONFIG.TELEGRAM_BOT_TOKEN ? '[CONFIGURED]' : '[NOT CONFIGURED in environment]'}`);
     console.log(`🌐 Deployed Base URL: ${CONFIG.APP_URL || 'Not specified'}`);
 
-    // Database persistence mode
-    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || process.env.DATABASE_URL || '';
-    if (mongoUri && (mongoUri.startsWith('mongodb://') || mongoUri.startsWith('mongodb+srv://'))) {
-      const isLocal = mongoUri.includes('localhost') || mongoUri.includes('127.0.0.1');
-      if (isLocal) {
-        console.log(`🍃 Database: MongoDB (LOCAL - not suitable for production)`);
-      } else {
-        console.log(`🍃 Database: MongoDB Atlas (CLOUD - production ready)`);
-      }
-    } else if (isProduction) {
-      console.error(`❌ CRITICAL: Production requires MongoDB Atlas but MONGODB_URI not configured!`);
-      console.error(`   Set MONGODB_URI environment variable with MongoDB Atlas connection string.`);
-    } else {
-      console.log(`🍃 Database: Local JSON file (development fallback - data will not persist in production)`);
-    }
+    const persistenceProvider = getPersistenceProvider();
+    console.log(`🍃 Database: ${persistenceProvider === 'local' ? 'Local JSON file' : persistenceProvider === 'mongodb' ? 'MongoDB' : 'Neon PostgreSQL'} (${persistenceProvider})`);
 
     // Auto-start ngrok tunnel in development
     if (!isProduction) {
@@ -312,6 +300,27 @@ async function startServer() {
         startTelegramLongPolling().catch((e) => {
           console.warn(`[Telegram Polling Engine] Failed to start long polling:`, e.message);
         });
+
+        let isShuttingDown = false;
+        const shutdown = (signal) => {
+          if (isShuttingDown) return;
+          isShuttingDown = true;
+          console.log(`[Server] ${signal} received. Finishing requests and flushing database writes...`);
+          server.close(async (err) => {
+            if (err) console.error('[Server] Error while closing HTTP server:', err);
+            try {
+              await db.flushPersistence();
+              console.log('[Server] Pending database writes flushed.');
+              process.exit(err ? 1 : 0);
+            } catch (flushError) {
+              console.error('[Server] Failed to flush pending database writes:', flushError);
+              process.exit(1);
+            }
+          });
+        };
+
+        process.once('SIGINT', () => shutdown('SIGINT'));
+        process.once('SIGTERM', () => shutdown('SIGTERM'));
       }
     } else {
       console.log(`[Telegram Bot Engine] TELEGRAM_BOT_TOKEN not configured. Set TELEGRAM_BOT_TOKEN in server environment to connect live Telegram.`);
